@@ -31,7 +31,7 @@ SELECT * FROM kursi;
 -- UPDATE: tandai kursi 07A sebagai TERISI
 UPDATE kursi
 SET availability = 'TERISI'
-WHERE seat_id = '07A';
+WHERE id_kursi = '07A';
 
   --  SELECT: setelah di ubah
 SELECT * FROM kursi;
