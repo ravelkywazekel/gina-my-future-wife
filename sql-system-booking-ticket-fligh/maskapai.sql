@@ -20,7 +20,7 @@ INSERT INTO maskapai (id_maskapai, nama_maskapai, website) VALUES
 ('M005', 'GARUDA INDONESIA', 'GARUDA-INDONESIA.COM');
 
   --  SELECT: awalnya data
-SELECT * FROM maskapai
+SELECT * FROM maskapai;
 
 
 
@@ -33,7 +33,7 @@ SET website = 'LIONAIR-INDONESIA.CO.ID'
 WHERE id_maskapai = 'M002';
 
   --  SELECT: setelah di ubah
-SELECT * FROM maskapai
+SELECT * FROM maskapai;
 
 
 
@@ -46,7 +46,7 @@ WHERE id_maskapai = 'M004';
 
 
   --  SELECT: setelah di hapus
-SELECT * FROM maskapai
+SELECT * FROM maskapai;
 
 
 
