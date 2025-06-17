@@ -21,7 +21,7 @@ INSERT INTO kursi (id_kursi, class, availability, id_operator, pembayaran) VALUE
 ('42E', 'BISNIS', 'TERISI', 'OP4', 'CASH');
 
   --  SELECT: awalnya data
-SELECT * FROM kursi
+SELECT * FROM kursi;
 
 
 
@@ -34,7 +34,7 @@ SET availability = 'TERISI'
 WHERE seat_id = '07A';
 
   --  SELECT: setelah di ubah
-SELECT * FROM kursi
+SELECT * FROM kursi;
 
 
 
@@ -46,7 +46,7 @@ DELETE FROM kursi
 WHERE id_kursi = '53D';
 
   --  SELECT: setelah di hapus
-SELECT * FROM kursi
+SELECT * FROM kursi;
 
 
 
