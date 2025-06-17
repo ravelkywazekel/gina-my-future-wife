@@ -9,6 +9,9 @@ CREATE TABLE tiket (
 
 
 
+
+
+
 -- INSERT: data
 INSERT INTO tiket (no_tiket, id_pemesanan, tanggal_penerbangan, seat_id, jadwal) VALUES
 ('SQ001', 'PM001', '2025-04-05', '45A', '13:15:00'),
