@@ -4,7 +4,7 @@ CREATE TABLE kursi (
     class VARCHAR(20) NOT NULL CHECK (class IN ('EKONOMI', 'FIRST CLASS', 'BISNIS')),
     availability VARCHAR(20) NOT NULL CHECK (availability IN ('TERSEDIA', 'TERISI')),
     id_operator VARCHAR(10) NOT NULL,
-    pembayaran VARCHAR(20) NOT NULL CHECK (payment IN ('DEBIT', 'CREDIT', 'CASH'))
+    pembayaran VARCHAR(20) NOT NULL CHECK (pembayaran IN ('DEBIT', 'CREDIT', 'CASH'))
 );
 
 
