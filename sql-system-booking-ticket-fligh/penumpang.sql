@@ -7,6 +7,9 @@ CREATE TABLE penumpang (
 
 
 
+
+
+
 -- INSERT: data
 INSERT INTO pemumpang (id_penumpang, nama, jenis_kelamin) VALUES 
 ('P001', 'DINAR DANISH', 'WANITA'),
