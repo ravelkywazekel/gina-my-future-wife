@@ -11,7 +11,7 @@ CREATE TABLE kapasitas (
 
 
 -- INSERT: data
-INSERT INTO kapasitas (id_pesawat, id_kursi, kapasitas) VALUES
+INSERT INTO kapasitas (id_pesawat, id_kursi, kapasitas_kursi) VALUES
 ('PE001', '45A', 780),
 ('PE002', '07A', 8),
 ('PE003', '50A', 770),
