@@ -3,7 +3,7 @@ CREATE TABLE tiket (
     no_tiket VARCHAR(10) PRIMARY KEY,
     id_pemesanan VARCHAR(10) NOT NULL,
     tanggal_penerbangan DATE NOT NULL,
-    seat_id VARCHAR(10) NOT NULL,
+    id_kursi VARCHAR(10) NOT NULL,
     jadwal TIME NOT NULL
 );
 
@@ -13,7 +13,7 @@ CREATE TABLE tiket (
 
 
 -- INSERT: data
-INSERT INTO tiket (no_tiket, id_pemesanan, tanggal_penerbangan, seat_id, jadwal) VALUES
+INSERT INTO tiket (no_tiket, id_pemesanan, tanggal_penerbangan, id_kursi, jadwal) VALUES
 ('SQ001', 'PM001', '2025-04-05', '45A', '13:15:00'),
 ('SQ002', 'PM002', '2025-04-05', '07A', '07:42:00'),
 ('SQ003', 'PM003', '2025-04-06', '50A', '21:15:00'),
@@ -30,7 +30,7 @@ SELECT * FROM tiket
 
 -- UPDATE: ganti kursi untuk tiket SQ004
 UPDATE tiket
-SET seat_id = '54D'
+SET id_kursi = '54D'
 WHERE no_tiket = 'SQ004';
 
   --  SELECT: setelah di ubah
