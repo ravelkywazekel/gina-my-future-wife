@@ -42,3 +42,12 @@ WHERE id penumpang = 'P005';
 
   --  SELECT: setelah di hapus
 SELECT * FROM penumpang
+
+
+
+
+
+    
+-- SELECT: menampilkan semua penumpang WANITA
+SELECT * FROM penumpang
+WHERE jenis_kelamin = 'WANITA';
