@@ -11,7 +11,7 @@ CREATE TABLE penumpang (
 
 
 -- INSERT: data
-INSERT INTO pemumpang (id_penumpang, nama, jenis_kelamin) VALUES 
+INSERT INTO penumpang (id_penumpang, nama, jenis_kelamin) VALUES 
 ('P001', 'DINAR DANISH', 'WANITA'),
 ('P002', 'NILAM SARI', 'WANITA'),
 ('P003', 'ABI SYAHLI', 'PRIA'),
@@ -41,7 +41,7 @@ SELECT * FROM penumpang;
 
 -- DELETE: hapus penumpang P005
 DELETE FROM penumpang
-WHERE id penumpang = 'P005';
+WHERE id_penumpang = 'P005';
 
   --  SELECT: setelah di hapus
 SELECT * FROM penumpang;
