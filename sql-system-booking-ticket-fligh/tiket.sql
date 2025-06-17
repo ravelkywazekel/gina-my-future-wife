@@ -21,7 +21,7 @@ INSERT INTO tiket (no_tiket, id_pemesanan, tanggal_penerbangan, id_kursi, jadwal
 ('SQ005', 'PM005', '2025-04-10', '42E', '04:30:00');
 
   --  SELECT: awalnya data
-SELECT * FROM tiket
+SELECT * FROM tiket;
 
 
 
@@ -34,7 +34,7 @@ SET id_kursi = '54D'
 WHERE no_tiket = 'SQ004';
 
   --  SELECT: setelah di ubah
-SELECT * FROM tiket
+SELECT * FROM tiket;
 
 
 
@@ -46,7 +46,7 @@ DELETE FROM tiket
 WHERE no_tiket = 'SQ005';
 
   --  SELECT: setelah di hapus
-SELECT * FROM tiket
+SELECT * FROM tiket;
 
 
 
