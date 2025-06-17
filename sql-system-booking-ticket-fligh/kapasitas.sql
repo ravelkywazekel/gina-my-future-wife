@@ -19,7 +19,7 @@ INSERT INTO kapasitas (id_pesawat, id_kursi, kapasitas) VALUES
 ('PE005', '42E', 60);
 
   --  SELECT: awalnya data
-SELECT * FROM kapasitas
+SELECT * FROM kapasitas;
 
 
 
@@ -32,7 +32,7 @@ SET kapasitas_kursi = 15
 WHERE id_pesawat = 'PE002';
 
   --  SELECT: setelah di ubah
-SELECT * FROM kapasitas
+SELECT * FROM kapasitas;
 
 
 
@@ -44,7 +44,7 @@ DELETE FROM kapasitas
 WHERE id_pesawat = 'PE005';
 
   --  SELECT: setelah di hapus
-SELECT * FROM kapasitas
+SELECT * FROM kapasitas;
 
 
 
