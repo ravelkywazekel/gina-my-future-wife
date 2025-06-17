@@ -2,7 +2,7 @@
 CREATE TABLE penerbangan (
     id_maskapai VARCHAR(10) NOT NULL,
     id_operator VARCHAR(10) NOT NULL,
-    status_penerbangan VARCHAR(20) NOT NULL CHECK (status IN ('AKTIF', 'DITUNDA', 'DIBATALKAN')),
+    status_penerbangan VARCHAR(20) NOT NULL CHECK (status_penerbangan IN ('AKTIF', 'DITUNDA', 'DIBATALKAN')),
     PRIMARY KEY (id_maskapai, id_operator)
 );
 
