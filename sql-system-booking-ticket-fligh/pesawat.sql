@@ -13,7 +13,7 @@ CREATE TABLE pesawat (
 
 
 -- INSERT: data
-INSERT INTO planes (id_pesawat, jenis_pesawat, merek_pesawat, maskapai, rute_penerbangan) VALUES
+INSERT INTO pesawat (id_pesawat, jenis_pesawat, merek_pesawat, id_maskapai, rute_penerbangan) VALUES
 ('PE001', 'MINI PASSENGER JETS', 'A220', 'M001', 'PADANG - JAKARTA'),
 ('PE002', 'JUMBO PASSENGER JETS', 'A350', 'M002', 'JAKARTA - BALI'),
 ('PE003', 'NORMAL PASSENGER JETS', 'A330', 'M003', 'BANDUNG - BALI'),
@@ -21,7 +21,7 @@ INSERT INTO planes (id_pesawat, jenis_pesawat, merek_pesawat, maskapai, rute_pen
 ('PE005', 'JUMBO PASSENGER JETS', 'A350', 'M005', 'PADANG - PEKANBARU');
 
   --  SELECT: awalnya data
-SELECT * FROM pesawat
+SELECT * FROM pesawat;
 
 
 
@@ -34,7 +34,7 @@ SET merek_pesawat = 'A321'
 WHERE id_pesawat = 'PE004';
 
   --  SELECT: setelah di ubah
-SELECT * FROM pesawat
+SELECT * FROM pesawat;
 
 
 
@@ -46,7 +46,7 @@ DELETE FROM pesawat
 WHERE id_pesawat = 'PE002';
 
   --  SELECT: setelah di hapus
-SELECT * FROM pesawat
+SELECT * FROM pesawat;
 
 
 
