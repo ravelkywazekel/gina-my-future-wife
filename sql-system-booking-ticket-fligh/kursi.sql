@@ -18,7 +18,7 @@ INSERT INTO kursi (id_kursi, class, availability, id_operator, pembayaran) VALUE
 ('07A', 'FIRST CLASS', 'TERSEDIA', 'OP2', 'CASH'),
 ('50A', 'EKONOMI', 'TERSEDIA', 'OP3', 'CREDIT'),
 ('53D', 'EKONOMI', 'TERSEDIA', 'OP4', 'DEBIT'),
-('42E', 'BISNIS', 'TERISI', 'OP4', 'CASH');
+('42E', 'BISNIS', 'TERISI', 'OP5', 'CASH');
 
   --  SELECT: awalnya data
 SELECT * FROM kursi;
