@@ -1,8 +1,8 @@
 -- CREATE: table
 CREATE TABLE penumpang (
-    id_penumpang VARCHAR(10) PRIMARY KEY,
-    nama VARCHAR(100) NOT NULL,
-    jenis_kelamin VARCHAR(10) CHECK (jenis_kelamin IN ('PRIA', 'WANITA'))
+    id_penumpang VARCHAR(3) PRIMARY KEY,
+    nama VARCHAR(10) NOT NULL,
+    jenis_kelamin VARCHAR(6) CHECK (jenis_kelamin IN ('PRIA', 'WANITA'))
 );
 
 
