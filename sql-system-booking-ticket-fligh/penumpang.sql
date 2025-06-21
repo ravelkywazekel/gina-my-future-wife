@@ -10,6 +10,8 @@ CREATE TABLE penumpang (
 
 
 
+
+
 -- INSERT: data
 INSERT INTO penumpang (id_penumpang, nama, jenis_kelamin) VALUES 
 ('P001', 'DINAR DANISH', 'WANITA'),
@@ -18,8 +20,8 @@ INSERT INTO penumpang (id_penumpang, nama, jenis_kelamin) VALUES
 ('P004', 'ZENDAYA', 'WANITA'),
 ('P005', 'ABU LAHAB', 'PRIA');
 
-  --  SELECT: awalnya data
-SELECT * FROM penumpang;
+    --  SELECT: awalnya data
+    SELECT * FROM penumpang;
 
 
 
@@ -31,8 +33,8 @@ UPDATE penumpang
 SET jenis_kelamin = 'PRIA'
 WHERE id_penumpang = 'P004';
 
-  --  SELECT: setelah di ubah
-SELECT * FROM penumpang;
+    --  SELECT: setelah di ubah
+    SELECT * FROM penumpang;
 
 
 
@@ -43,8 +45,8 @@ SELECT * FROM penumpang;
 DELETE FROM penumpang
 WHERE id_penumpang = 'P005';
 
-  --  SELECT: setelah di hapus
-SELECT * FROM penumpang;
+    --  SELECT: setelah di hapus
+    SELECT * FROM penumpang;
 
 
 
