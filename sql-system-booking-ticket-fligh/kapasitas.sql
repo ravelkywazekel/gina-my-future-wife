@@ -1,7 +1,7 @@
 -- CREATE: table
 CREATE TABLE kapasitas (
-    id_pesawat VARCHAR(10) PRIMARY KEY,
-    id_kursi VARCHAR(10) NOT NULL,
+    id_pesawat CHAR(5) UNIQUE PRIMARY KEY,
+    id_kursi CHAR(3) UNIQUE NOT NULL,
     kapasitas_kursi INTEGER NOT NULL
 );
 
