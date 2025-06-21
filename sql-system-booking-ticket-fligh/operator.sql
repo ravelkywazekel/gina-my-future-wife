@@ -1,12 +1,9 @@
 -- CREATE: table
 CREATE TABLE operator (
-    id_operator VARCHAR(10) PRIMARY KEY,
-    email VARCHAR(255) NOT NULL,
-    nama_operator VARCHAR(100) NOT NULL
+    id_operator CHAR(3) UNIQUE PRIMARY KEY,
+    email VARCHAR(30) NOT NULL,
+    nama_operator VARCHAR(30) NOT NULL
 );
-
-
-
 
 
 
@@ -23,6 +20,40 @@ INSERT INTO operator (id_operator, email, nama_operator) VALUES
 SELECT * FROM operator;
 
 
+
+
+-- ALTER: menambah kolom tabel
+ALTER TABLE operator
+ADD medsos VARCHAR(20) default 'test';
+
+    -- SELECT: menambah kolom
+    SELECT * FROM operator;
+
+
+-- ALTER: mengubah nama kolomtabel
+ALTER TABLE operator
+CHANGE medsos media_sosial VARCHAR(20) default 'test';
+
+    -- SELECT: mengubah kolom
+    SELECT * FROM operator;
+
+
+--  ALTER: menghapus kolom tabel
+ALTER TABLE operator
+DROP COLUMN media_sosial;
+
+    -- SELECT: menambah kolom
+    SELECT * FROM operator;
+
+
+
+
+-- DROP: menghapus tabel
+-- DROP TABLE operator;
+
+
+-- TRUNCATE: menghapus isi data tabel
+-- TRUNCATE TABLE operator;
 
 
   
@@ -51,7 +82,3 @@ SELECT * FROM operator;
 
 
 
-    
--- SELECT: menampilkan operator bernama 'LION AIR'
-SELECT * FROM operator
-WHERE nama_operator = 'LION AIR';
