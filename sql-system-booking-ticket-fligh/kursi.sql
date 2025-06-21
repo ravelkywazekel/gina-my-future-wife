@@ -1,10 +1,10 @@
 -- CREATE: table
 CREATE TABLE kursi (
-    id_kursi VARCHAR(10) PRIMARY KEY,
-    class VARCHAR(20) NOT NULL CHECK (class IN ('EKONOMI', 'FIRST CLASS', 'BISNIS')),
-    availability VARCHAR(20) NOT NULL CHECK (availability IN ('TERSEDIA', 'TERISI')),
-    id_operator VARCHAR(10) NOT NULL,
-    pembayaran VARCHAR(20) NOT NULL CHECK (pembayaran IN ('DEBIT', 'CREDIT', 'CASH'))
+    id_kursi CHAR(3) UNIQUE PRIMARY KEY,
+    class ENUM('EKONOMI', 'FIRST CLASS', 'BISNIS'),
+    availability SET('TERSEDIA', 'TERISI'),
+    id_operator CHAR(3) UNIQUE,
+    pembayaran ENUM('DEBIT', 'CREDIT', 'CASH')
 );
 
 
