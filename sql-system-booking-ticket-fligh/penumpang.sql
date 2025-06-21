@@ -1,8 +1,8 @@
 -- CREATE: table
 CREATE TABLE penumpang (
-    id_penumpang VARCHAR(3) PRIMARY KEY,
-    nama VARCHAR(10) NOT NULL,
-    jenis_kelamin VARCHAR(6) CHECK (jenis_kelamin IN ('PRIA', 'WANITA'))
+    id_penumpang CHAR(4) UNIQUE PRIMARY KEY,
+    nama VARCHAR(20) NOT NULL,
+    jenis_kelamin ENUM('WANITA', 'PRIA') DEFAULT 'PRIA'
 );
 
 
