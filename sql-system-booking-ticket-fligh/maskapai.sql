@@ -1,8 +1,8 @@
 -- CREATE: table
 CREATE TABLE maskapai (
-    id_maskapai VARCHAR(10) PRIMARY KEY,
-    nama_maskapai VARCHAR(100) NOT NULL,
-    website VARCHAR(255) NOT NULL
+    id_maskapai CHAR(4) UNIQUE PRIMARY KEY,
+    nama_maskapai ENUM('GARUDA INDONESIA', 'LION AIR', 'CITILINK'),
+    website VARCHAR(30) UNIQUE
 );
 
 
