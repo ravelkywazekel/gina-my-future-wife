@@ -2,7 +2,7 @@
 CREATE TABLE maskapai (
     id_maskapai CHAR(4) UNIQUE PRIMARY KEY,
     nama_maskapai ENUM('GARUDA INDONESIA', 'LION AIR', 'CITILINK'),
-    website VARCHAR(30) UNIQUE
+    website VARCHAR(30) NOT NULL
 );
 
 
