@@ -224,3 +224,36 @@ SELECT * FROM maskapai;
 
 -- LIMIT
 SELECT * FROM maskapai LIMIT 3;
+
+
+-- 8# operator function (MIN(), MAX(), COUNT(), IF() IFNULL(), COALESCE ())
+-- MIN()
+SELECT MIN(id_maskapai) AS min_maskapai FROM maskapai;
+
+-- MAX() 
+SELECT MAX(id_maskapai) AS max_maskapai FROM maskapai;
+
+-- COUNT()
+SELECT COUNT(*) AS total_maskapai FROM maskapai;
+
+-- IF()
+SELECT id_maskapai, nama_maskapai,
+IF(nama_maskapai = 'GARUDA INDONESIA', 'LION AIR', 'CITILINK') AS jenis_operator
+FROM maskapai;
+
+-- IFNULL()
+INSERT INTO maskapai (id_maskapai, nama_maskapai, website) VALUES ('M006', NULL, 'CITILINK.COM');
+SELECT 
+    id_maskapai,
+    IFNULL(nama_maskapai, 'Maskapai tidak terdaftar') AS nama_airline
+FROM maskapai;
+
+-- COALESCE()
+SELECT 
+    id_maskapai,
+    COALESCE(nama_maskapai, id_maskapai, 'Tidak ada nama') AS airline_info
+FROM maskapai;
+
+DELETE FROM maskapai WHERE id_maskapai = 'M006';
+
+-- 9# operator JOIN (INNER JOIN, RIGHT JOIN, LEFT JOIN, FULL JOIN)
