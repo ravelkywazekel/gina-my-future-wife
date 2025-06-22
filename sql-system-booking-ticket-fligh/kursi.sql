@@ -92,18 +92,17 @@ GO;
 
 
 -- CREATE INDEX
-CREATE INDEX idx_kursi_class
-ON operator(class);
+CREATE INDEX idx_class
+ON kursi(class);
     -- DROP INDEX: menghapus index tersebut
-    ALTER TABLE kapasitas
-    DROP INDEX idx_kursi_class;
+    ALTER TABLE kursi
+    DROP INDEX idx_class;
 
 
 -- CREATE VIEW
 CREATE VIEW [semua kursi] AS
 SELECT * FROM kursi
 WHERE class = 'EKONOMI';
-
     -- SELECT: menampilkan prosedur tersebut
     SELECT * FROM [semua kursi];
 */
