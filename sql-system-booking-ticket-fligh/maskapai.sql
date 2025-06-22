@@ -98,11 +98,11 @@ ON maskapai(website);
 */
 
 -- CREATE VIEW
-CREATE VIEW website maskapai AS
+CREATE VIEW website_maskapai AS
 SELECT * FROM maskapai
-WHERE nama_operator = 'GARUDA-INDONESIA.COM';
+WHERE nama_maskapai = 'GARUDA-INDONESIA.COM';
     -- SELECT: menampilkan prosedur tersebut
-    SELECT * FROM website maskapai;
+    SELECT * FROM website_maskapai;
 
 
 
