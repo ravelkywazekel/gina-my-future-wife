@@ -18,7 +18,7 @@ DROP DATABASE pemesanan_tiket_pesawat;
 CREATE TABLE kursi (
     id_kursi CHAR(3) UNIQUE PRIMARY KEY,
     class ENUM('EKONOMI', 'FIRST CLASS', 'BISNIS'),
-    availability SET('TERSEDIA', 'TERISI'),
+    availability ENUM('TERSEDIA', 'TERISI'),
     id_operator CHAR(3) UNIQUE,
     pembayaran ENUM('DEBIT', 'CREDIT', 'CASH')
 );
@@ -202,10 +202,10 @@ FROM kursi
 GROUP BY class;
 
 -- HAVING
-SELECT id_kursi, COUNT(*) as total_kursi
+SELECT pembayaran, COUNT(*) as total_pembayaran
 FROM kursi
-GROUP BY class
-HAVING total_class > 1;
+GROUP BY pembayaran 
+HAVING total_pembayaran > 1;
 
 
 -- #7 operator lainnya (AS, CASE, DISTINCT, INTO, LIMIT)
@@ -247,7 +247,7 @@ SELECT COUNT(*) AS total_kursi FROM kursi;
 -- IF()
 SELECT 
     id_kursi,
-    IF(availability = 'TERSEDIA', 'TERISI') AS availability_status
+    IF(availability, 'TERSEDIA', 'TERISI') AS availability_status
 FROM kursi;
 
 -- IFNULL() 
