@@ -14,8 +14,6 @@ DROP DATABASE pemesanan_tiket_pesawat;
 
 
 
-
-
 -- CREATE: table
 CREATE TABLE operator (
     id_operator CHAR(3) UNIQUE PRIMARY KEY,
@@ -56,12 +54,14 @@ DROP COLUMN media_sosial;
     SELECT * FROM operator;
 
 
+/*
 -- DROP: menghapus tabel
--- DROP TABLE operator;
+DROP TABLE operator;
 
 
 -- TRUNCATE: menghapus isi data tabel
--- TRUNCATE TABLE operator;
+TRUNCATE TABLE operator;
+*/
 
 
 -- UPDATE: ubah email untuk operator OP2
@@ -107,8 +107,6 @@ WHERE nama_operator = 'GARUDA INDONESIA';
 
 
 
-
-
 -- **CONTOH SEMUA PENGGUNAAN OPERATOR**
 
 -- 1# operator logika (AND, OR, NOT)
@@ -122,7 +120,6 @@ SELECT * FROM operator
 WHERE NOT email LIKE '%@LIONAIR.CO.ID';
 
 
-
 -- 2# operator NULL (IS NULL, IS NOT NULL)
 SELECT * FROM operator 
 WHERE email IS NULL;
@@ -131,17 +128,14 @@ SELECT * FROM operator
 WHERE email IS NOT NULL;
 
 
-
 -- 3# operator pencocokan pola (LIKE)
 SELECT * FROM operator 
 WHERE email LIKE '%@GARUDA-INDONESIA.COM';
 
 
-
 -- 4# operator set (IN, BETWEEN)
 SELECT * FROM operator 
 WHERE id_operator IN ('OP1', 'OP2');
-
 
 
 -- 5# operator query (UNION, UNION ALL, EXISTS, ANY, ALL)
@@ -178,7 +172,6 @@ SELECT * FROM operator
 WHERE id_operator = ANY (SELECT id_operator FROM backup_operator);
 
 
-
 -- 6# Sorting and grouping operators (ORDER BY, GROUP BY, HAVING)
 -- ORDER BY
 SELECT * FROM operator
@@ -189,7 +182,6 @@ SELECT email, COUNT(*) as operator_count
 FROM operator
 GROUP BY email
 HAVING operator_count > 1; 
-
 
 
 -- 7# operator lainnya (AS, CASE, DISTINCT, INTO, LIMIT)
@@ -216,7 +208,6 @@ SELECT * FROM operator;
 SELECT * FROM operator LIMIT 2;
 
 
-
 -- 8# operator function (MIN(), MAX(), COUNT(), IF() IFNULL(), COALESCE ())
 -- MIN()
 SELECT MIN(id_operator) AS min_operator_id FROM operator;
@@ -241,7 +232,6 @@ FROM operator;
 SELECT id_operator, 
        COALESCE(email, 'No Email', 'Unknown') AS email_address 
 FROM operator;
-
 
 
 -- 9# operator JOIN (INNER JOIN, RIGHT JOIN, LEFT JOIN, FULL JOIN)
