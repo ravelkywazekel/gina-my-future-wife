@@ -17,7 +17,7 @@ DROP DATABASE pemesanan_tiket_pesawat;
 -- CREATE: table
 CREATE TABLE kapasitas (
     id_pesawat VARCHAR(5) UNIQUE PRIMARY KEY,
-    id_kursi VARCHAR(3) UNIQUE NOT NULL,
+    id_kursi VARCHAR(3) UNIQUE,
     kapasitas_kursi INTEGER NOT NULL
 );
 
@@ -188,15 +188,15 @@ HAVING total_planes > 1;
 
 -- 7# operator lainnya (AS, CASE, DISTINCT, INTO, LIMIT)
 -- AS
-SELECT id_pesawat AS aircraft_id, kapasitas_kursi AS seat_capacity FROM kapasitas;
+SELECT id_pesawat AS aircraft_id, kapasitas_kursi AS kapasitas_kursi FROM kapasitas;
 
 -- CASE
 SELECT id_pesawat, kapasitas_kursi,
     CASE 
-        WHEN kapasitas_kursi > 700 THEN 'High Capacity'
-        WHEN kapasitas_kursi BETWEEN 100 AND 700 THEN 'Medium Capacity'
+        WHEN kapasitas_kursi > 700 THEN 'KAPASITAS TINGGI'
+        WHEN kapasitas_kursi BETWEEN 100 AND 700 THEN 'KAPASITAS SEDANG'
         ELSE 'Low Capacity'
-    END AS capacity_category
+    END AS kapasitas_kategori
 FROM kapasitas;
 
 -- DISTINCT
@@ -221,29 +221,29 @@ FROM kapasitas;
 
 -- 8# operator function (MIN(), MAX(), COUNT(), SUM(), AVG(), IF() IFNULL(), COALESCE ())
 -- MIN()
-SELECT MIN(kapasitas_kursi) AS smallest_capacity FROM kapasitas;
+SELECT MIN(kapasitas_kursi) AS kapasitas_terkecil FROM kapasitas;
 
 -- MAX()
-SELECT MAX(kapasitas_kursi) AS largest_capacity FROM kapasitas;
+SELECT MAX(kapasitas_kursi) AS kapasitas_terbesar FROM kapasitas;
 
 -- COUNT()
-SELECT COUNT(*) AS total_aircraft FROM kapasitas;
+SELECT COUNT(*) AS total_pesawat FROM kapasitas;
 
 -- SUM() 
-SELECT SUM(kapasitas_kursi) AS total_seats FROM kapasitas;
+SELECT SUM(kapasitas_kursi) AS total_kursi FROM kapasitas;
 
 -- AVG()
-SELECT AVG(kapasitas_kursi) AS average_capacity FROM kapasitas;
+SELECT AVG(kapasitas_kursi) AS kapasitas_average FROM kapasitas;
 
 -- IF()
 SELECT id_pesawat, kapasitas_kursi,
-IF(kapasitas_kursi > 100, 'Large', 'Small') AS size_category
+IF(kapasitas_kursi > 100, 'Besar', 'Kecil') AS jumlah_kursi
 FROM kapasitas;
 
 -- IFNULL()
 INSERT INTO kapasitas VALUES ('PE006', NULL, 200);
 
-SELECT id_kursi, IFNULL(id_kursi, 'Unknown') AS seat_id_with_fallback
+SELECT id_kursi, IFNULL(id_kursi, 'Tidak dikenal') AS id_kursi_fallback
 FROM kapasitas;
 
 DELETE FROM kapasitas WHERE id_pesawat = 'PE006';
@@ -254,7 +254,7 @@ INSERT INTO kapasitas VALUES
 ('PE007', NULL, 444);
 
 SELECT id_pesawat,
-COALESCE(id_kursi, id_pesawat, 'No ID Available') AS identifier
+COALESCE(id_kursi, id_pesawat, 'Tidak Ada ID yang Tersedia') AS id_pengenal
 FROM kapasitas;
 
 DELETE FROM kapasitas WHERE id_pesawat IN ('PE006', 'PE007');
