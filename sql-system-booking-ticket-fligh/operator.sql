@@ -16,7 +16,7 @@ DROP DATABASE pemesanan_tiket_pesawat;
 
 -- CREATE: table
 CREATE TABLE operator (
-    id_operator VARHAR(3) UNIQUE PRIMARY KEY,
+    id_operator VARCHAR(3) UNIQUE PRIMARY KEY,
     email VARCHAR(30) NOT NULL,
     nama_operator VARCHAR(30) NOT NULL
 );
