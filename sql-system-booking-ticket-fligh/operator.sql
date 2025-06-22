@@ -210,27 +210,27 @@ SELECT * FROM operator LIMIT 2;
 
 -- 8# operator function (MIN(), MAX(), COUNT(), IF() IFNULL(), COALESCE ())
 -- MIN()
-SELECT MIN(id_operator) AS min_operator_id FROM operator;
+SELECT MIN(id_operator) AS id_operator_min FROM operator;
 
 -- MAX()
-SELECT MAX(id_operator) AS max_operator_id FROM operator;
+SELECT MAX(id_operator) AS id_operator_max FROM operator;
 
 -- COUNT()
-SELECT COUNT(*) AS total_operators FROM operator;
+SELECT COUNT(*) AS total_operator FROM operator;
 
 -- IF()
 SELECT id_operator, 
-       IF(nama_operator = 'GARUDA INDONESIA', 'Yes', 'No') AS is_garuda 
+       IF(nama_operator = 'GARUDA INDONESIA', 'Ya', 'Tidak') AS ini_garuda_indonesia 
 FROM operator;
 
 -- IFNULL()
 SELECT id_operator, 
-       IFNULL(email, 'No Email') AS email_address 
+       IFNULL(email, 'Tidak Ada Email') AS alamat_email 
 FROM operator;
 
 -- COALESCE()
 SELECT id_operator, 
-       COALESCE(email, 'No Email', 'Unknown') AS email_address 
+       COALESCE(email, 'Tidak Ada Email', 'Tidak diketahui') AS alamat_email 
 FROM operator;
 
 
