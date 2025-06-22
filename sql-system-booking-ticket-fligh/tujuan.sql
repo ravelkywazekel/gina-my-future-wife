@@ -16,7 +16,8 @@ DROP DATABASE pemesanan_tiket_pesawat;
 
 -- CREATE: table
 CREATE TABLE tujuan (
-    id_pesawat VARCHAR(5) UNIQUE PRIMARY KEY,
+    antrian INT PRIMARY KEY AUTO_INCREMENT,
+    id_pesawat VARCHAR(5) UNIQUE,
     id_penumpang VARCHAR(4) UNIQUE,
     tujuan_pesawat VARCHAR(15) NOT NULL
 );
@@ -112,3 +113,148 @@ WHERE tujuan_pesawat = 'PADANG';
 -- **CONTOH SEMUA PENGGUNAAN OPERATOR**
 
 -- 1# operator logika (AND, OR, NOT)
+-- AND
+SELECT * FROM tujuan 
+WHERE tujuan_pesawat = 'BALI' AND id_penumpang = 'P002';
+
+-- OR
+SELECT * FROM tujuan 
+WHERE tujuan_pesawat = 'JAKARTA' OR tujuan_pesawat = 'BALI';
+
+-- NOT
+SELECT * FROM tujuan 
+WHERE NOT tujuan_pesawat = 'SURABAYA';
+
+
+-- 2# operator NULL (IS NULL, IS NOT NULL)
+-- IS NULL
+SELECT * FROM tujuan 
+WHERE id_penumpang IS NULL;  
+
+-- IS NOT NULL
+SELECT * FROM tujuan 
+WHERE id_penumpang IS NOT NULL;  
+
+
+-- 3# operator pencocokan pola (LIKE)
+-- LIKE
+SELECT * FROM tujuan 
+WHERE tujuan_pesawat LIKE 'JAK%';
+
+        
+-- 4# operator set (IN)
+-- IN
+SELECT * FROM tujuan 
+WHERE tujuan_pesawat IN ('BALI', 'SURABAYA');
+
+
+-- 5# operator query (UNION, UNION ALL, EXISTS, ANY, ALL)
+-- UNION
+CREATE TABLE tujuan_backup (
+    antrian INT PRIMARY KEY AUTO_INCREMENT,
+    id_pesawat VARCHAR(5) UNIQUE,
+    id_penumpang VARCHAR(4) UNIQUE,
+    tujuan_pesawat VARCHAR(15) NOT NULL
+);
+
+INSERT INTO tujuan_backup (id_pesawat, id_penumpang, tujuan_pesawat) VALUES
+('PE006', 'P006', 'MEDAN'),
+('PE007', 'P007', 'YOGYAKARTA');
+
+SELECT id_penumpang FROM tujuan
+UNION
+SELECT id_penumpang FROM tujuan_backup;
+
+-- UNION ALL
+SELECT id_penumpang FROM tujuan
+UNION ALL
+SELECT id_penumpang FROM tujuan_backup;
+
+-- EXISTS
+SELECT * 
+FROM tujuan t
+WHERE EXISTS (
+    SELECT 1 FROM tujuan_backup b 
+    WHERE b.id_penumpang = t.id_penumpang
+);
+
+-- ANY
+SELECT * FROM tujuan
+WHERE antrian > ANY (SELECT antrian FROM tujuan_backup);
+
+-- ALL
+SELECT * FROM tujuan
+WHERE antrian > ALL (SELECT antrian FROM tujuan_backup);
+
+
+-- 6# operator pengurutan dan pengelompokan (ORDER BY, GROUP BY, HAVING)
+-- ORDER BY
+SELECT * FROM tujuan
+ORDER BY tujuan_pesawat DESC;
+
+-- GROUP BY
+SELECT tujuan_pesawat, COUNT(*) as total_penerbangan
+FROM tujuan
+GROUP BY tujuan_pesawat;
+
+-- HAVING
+SELECT tujuan_pesawat, COUNT(*) as total_penerbangan
+FROM tujuan
+GROUP BY tujuan_pesawat
+HAVING total_penerbangan > 1; 
+
+
+-- #7 operator lainnya (AS, CASE, DISTINCT, INTO, LIMIT)
+-- AS
+SELECT id_penumpang AS passenger_id, tujuan_pesawat AS destinasi_pesawat FROM tujuan;
+
+-- CASE
+SELECT 
+    id_penumpang,
+    tujuan_pesawat,
+    CASE 
+        WHEN tujuan_pesawat = 'BALI' THEN 'Tujuan Populer'
+        ELSE 'Tujuan Lainnya'
+    END AS deskripsi_tujuan
+FROM tujuan;
+
+-- DISTINCT
+SELECT DISTINCT tujuan_pesawat FROM tujuan;
+
+-- INTO
+CREATE TABLE tujuan_copy AS
+SELECT * FROM tujuan;
+
+-- LIMIT
+SELECT * FROM tujuan LIMIT 3;
+
+
+-- 8# operator function (MIN(), MAX(), COUNT(), IF() IFNULL(), COALESCE ())
+-- MIN()
+SELECT MIN(antrian) AS min_antrian FROM tujuan;
+
+-- MAX()
+SELECT MAX(antrian) AS max_antrian FROM tujuan;
+
+-- COUNT()
+SELECT COUNT(*) AS total_entries FROM tujuan;
+
+-- IF()
+SELECT id_penumpang, tujuan_pesawat, IF(tujuan_pesawat = 'BALI', 'PADANG', 'PEKANBARU') AS tujuan_jenis
+FROM tujuan;
+
+-- IFNULL()
+INSERT INTO tujuan (id_pesawat, id_penumpang, tujuan_pesawat) VALUES ('PE008', NULL, 'TIDAK DIKENAL');
+SELECT id_penumpang,
+IFNULL(tujuan_pesawat, 'Unknown Destination') AS destination_status
+FROM tujuan;
+
+--COALESCE()
+SELECT id_penumpang,
+COALESCE(tujuan_pesawat, 'No Destination') AS destination_info
+FROM tujuan;
+
+DELETE FROM tujuan WHERE id_pesawat = 'PE008';
+
+
+-- 9# operator JOIN (INNER JOIN, RIGHT JOIN, LEFT JOIN, FULL JOIN)
