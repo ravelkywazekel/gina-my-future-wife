@@ -91,7 +91,7 @@ GO;
 
 -- CREATE INDEX
 CREATE INDEX idx_kapasitas_kursi
-ON operator(nama_kapasitas_kursi);
+ON operator(kapasitas_kursi);
     -- DROP INDEX: menghapus index tersebut
     ALTER TABLE kapasitas
     DROP INDEX idx_kapasitas_kursi;
