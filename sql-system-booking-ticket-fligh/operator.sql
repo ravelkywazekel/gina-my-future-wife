@@ -95,15 +95,16 @@ ON operator(nama_operator);
     -- DROP INDEX: menghapus index tersebut
     ALTER TABLE operator
     DROP INDEX idx_nama_operator;
+*/
 
 
 -- CREATE VIEW
-CREATE VIEW [garuda indonesia] AS
+CREATE VIEW garuda_indonesia AS
 SELECT * FROM operator
 WHERE nama_operator = 'GARUDA INDONESIA';
     -- SELECT: menampilkan prosedur tersebut
-    SELECT * FROM [garuda indonesia];
-*/
+    SELECT * FROM garuda_indonesia;
+
 
 
 
