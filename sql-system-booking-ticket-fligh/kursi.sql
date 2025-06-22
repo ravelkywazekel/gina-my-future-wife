@@ -97,15 +97,17 @@ ON kursi(class);
     -- DROP INDEX: menghapus index tersebut
     ALTER TABLE kursi
     DROP INDEX idx_class;
+*/
 
 
 -- CREATE VIEW
-CREATE VIEW [semua kursi] AS
+CREATE VIEW semua_kursi AS
 SELECT * FROM kursi
 WHERE class = 'EKONOMI';
     -- SELECT: menampilkan prosedur tersebut
-    SELECT * FROM [semua kursi];
-*/
+    SELECT * FROM semua_kursi;
+
+
 
 
 -- **CONTOH SEMUA PENGGUNAAN OPERATOR**
