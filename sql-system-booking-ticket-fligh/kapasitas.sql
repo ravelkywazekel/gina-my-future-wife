@@ -251,7 +251,7 @@ DELETE FROM kapasitas WHERE id_pesawat = 'PE006';
 -- COALESCE()
 INSERT INTO kapasitas VALUES
 ('PE006', NULL, 200),
-('PE007', NULL, NULL);
+('PE007', NULL, 444);
 
 SELECT id_pesawat,
 COALESCE(id_kursi, id_pesawat, 'No ID Available') AS identifier
@@ -271,9 +271,9 @@ CREATE TABLE penerbangan (
 INSERT INTO penerbangan (id_penerbangan, id_pesawat, bandara_asal, bandara_tujuan) VALUES
 ('PGA001', 'PE001', 'Soekarno-Hatta', 'Changi'),
 ('PGA002', 'PE002', 'Juanda', 'Ngurah Rai'),
-('PGA003', 'PE001', 'Changi', 'Soekarno-Hatta'),
-('PGA004', NULL, 'Ngurah Rai', 'Juanda'),
-('PGA005', 'PE006', 'Soekarno-Hatta', 'Kuala Lumpur');
+('PGA003', 'PE003', 'Changi', 'Soekarno-Hatta'),
+('PGA004', 'PE004', 'Ngurah Rai', 'Juanda'),
+('PGA005', 'PE005', 'Soekarno-Hatta', 'Kuala Lumpur');
 
 -- INNER JOIN
 SELECT k.id_pesawat, k.kapasitas_kursi, p.id_penerbangan, p.bandara_asal
