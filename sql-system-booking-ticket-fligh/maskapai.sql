@@ -256,4 +256,43 @@ FROM maskapai;
 
 DELETE FROM maskapai WHERE id_maskapai = 'M006';
 
+
 -- 9# operator JOIN (INNER JOIN, RIGHT JOIN, LEFT JOIN, FULL JOIN)
+CREATE TABLE operator (
+    id_operator VARCHAR(3) UNIQUE PRIMARY KEY,
+    email VARCHAR(30) NOT NULL,
+    nama_operator VARCHAR(30) NOT NULL
+);
+
+INSERT INTO operator (id_operator, email, nama_operator) VALUES
+('OP1', 'KONTAK@GARUDA-INDONESIA.COM', 'GARUDA INDONESIA'),
+('OP2', 'KONTAK@LIONAIR.CO.ID', 'LION AIR'),
+('OP3', 'KONTAK@CITILINK.CO.ID', 'CITILINK'),
+('OP4', 'KONTAK@LIONAIR.CO.ID', 'LION AIR'),
+('OP5', 'KONTAK@GARUDA-INDONESIA.COM', 'GARUDA INDONESIA');
+
+-- INNER JOIN
+SELECT m.id_maskapai, m.nama_maskapai, o.email, o.nama_operator
+FROM maskapai m
+INNER JOIN operator o ON m.nama_maskapai = o.nama_operator;
+
+-- LEFT JOIN 
+SELECT m.id_maskapai, m.nama_maskapai, o.email, o.nama_operator
+FROM maskapai m
+LEFT JOIN operator o ON m.nama_maskapai = o.nama_operator;
+
+-- RIGHT JOIN
+SELECT m.id_maskapai, m.nama_maskapai, o.email, o.nama_operator
+FROM maskapai m
+RIGHT JOIN operator o ON m.nama_maskapai = o.nama_operator;
+
+-- FULL JOIN (LEFT;+ RIGHT JOIN)
+SELECT m.id_maskapai, m.nama_maskapai, o.email, o.nama_operator
+FROM maskapai m
+LEFT JOIN operator o ON m.nama_maskapai = o.nama_operator
+
+UNION
+
+SELECT m.id_maskapai, m.nama_maskapai, o.email, o.nama_operator
+FROM maskapai m
+RIGHT JOIN operator o ON m.nama_maskapai = o.nama_operator;
