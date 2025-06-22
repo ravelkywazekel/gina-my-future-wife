@@ -91,19 +91,19 @@ GO;
 
 -- CREATE INDEX
 CREATE INDEX idx_kapasitas_kursi
-ON operator(kapasitas_kursi);
+ON kapasitas;
     -- DROP INDEX: menghapus index tersebut
     ALTER TABLE kapasitas
     DROP INDEX idx_kapasitas_kursi;
+*/
 
 
 -- CREATE VIEW
-CREATE VIEW [kapasitas kursi] AS
+CREATE VIEW jumlah_kursi AS
 SELECT * FROM kapasitas
 WHERE kapasitas_kursi = 780;
     -- SELECT: menampilkan prosedur tersebut
-    SELECT * FROM [kapasitas kursi];
-*/
+    SELECT * FROM jumlah_kursi;
 
 
 
