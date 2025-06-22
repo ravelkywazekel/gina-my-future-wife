@@ -72,12 +72,14 @@ WHERE id_pesawat = 'PE003' AND id_penumpang = 'P003';
     --  SELECT: setelah di ubah
     SELECT * FROM tujuan;
 
-        
+
+/*
 -- DELETE: hapus catatan tujuan untuk penumpang P005 pada penerbangan PE005
 DELETE FROM tujuan
 WHERE id_pesawat = 'PE005' AND id_penumpang = 'P005';
     --  SELECT: setelah di hapus
     SELECT * FROM tujuan;
+*/
 
 
 /*
@@ -258,3 +260,44 @@ DELETE FROM tujuan WHERE id_pesawat = 'PE008';
 
 
 -- 9# operator JOIN (INNER JOIN, RIGHT JOIN, LEFT JOIN, FULL JOIN)
+CREATE TABLE penumpang (
+    id_penumpang CHAR(4) PRIMARY KEY,
+    nama VARCHAR(20) NOT NULL,
+    jenis_kelamin ENUM('WANITA', 'PRIA') DEFAULT 'PRIA',
+    antrian INT,
+    FOREIGN KEY (antrian) REFERENCES tujuan(antrian)
+);
+
+-- Insert sample data into the penumpang table
+INSERT INTO penumpang (id_penumpang, nama, jenis_kelamin, antrian) VALUES 
+('P001', 'DINAR DANISH', 'WANITA', 1),
+('P002', 'NILAM SARI', 'WANITA', 2),
+('P003', 'ABI SYAHLI', 'PRIA', 3),
+('P004', 'ZENDAYA', 'WANITA', 4),
+('P005', 'ABU LAHAB', 'PRIA', 5);
+
+-- INNER JOIN
+SELECT p.id_penumpang, p.nama, p.jenis_kelamin, t.tujuan_pesawat
+FROM penumpang p
+INNER JOIN tujuan t ON p.antrian = t.antrian;
+
+-- LEFT JOIN
+SELECT p.id_penumpang, p.nama, p.jenis_kelamin, t.tujuan_pesawat
+FROM penumpang p
+LEFT JOIN tujuan t ON p.antrian = t.antrian;
+
+-- FIGHT JOIN
+SELECT p.id_penumpang, p.nama, p.jenis_kelamin, t.tujuan_pesawat
+FROM penumpang p
+RIGHT JOIN tujuan t ON p.antrian = t.antrian;
+
+-- FULL JOIN (LEFT + RIGHT JOIN)
+SELECT p.id_penumpang, p.nama, p.jenis_kelamin, t.tujuan_pesawat
+FROM penumpang p
+LEFT JOIN tujuan t ON p.antrian = t.antrian
+
+UNION
+
+SELECT p.id_penumpang, p.nama, p.jenis_kelamin, t.tujuan_pesawat
+FROM penumpang p
+RIGHT JOIN tujuan t ON p.antrian = t.antrian;
