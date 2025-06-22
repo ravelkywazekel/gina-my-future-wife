@@ -172,7 +172,7 @@ SELECT * FROM operator
 WHERE id_operator = ANY (SELECT id_operator FROM backup_operator);
 
 
--- 6# Sorting and grouping operators (ORDER BY, GROUP BY, HAVING)
+-- 6# operator pengurutan dan pengelompokan (ORDER BY, GROUP BY, HAVING)
 -- ORDER BY
 SELECT * FROM operator
 ORDER BY nama_operator ASC;  
