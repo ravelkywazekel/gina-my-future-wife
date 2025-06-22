@@ -186,7 +186,7 @@ GROUP BY kapasitas_kursi
 HAVING total_pesawat > 1;
 
 
--- 7# operator lainnya (AS, CASE, DISTINCT, INTO, LIMIT)
+-- 7# operator lainnya (AS, CASE, DISTINCT, INTO, LIMIT, CASE)
 -- AS
 SELECT id_pesawat AS aircraft_id, kapasitas_kursi AS kapasitas_kursi FROM kapasitas;
 
