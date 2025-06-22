@@ -180,10 +180,10 @@ SELECT * FROM kapasitas
 ORDER BY kapasitas_kursi DESC;
 
 -- GROUP BY
-SELECT kapasitas_kursi, COUNT(*) as total_planes
+SELECT kapasitas_kursi, COUNT(*) as total_pesawat
 FROM kapasitas
 GROUP BY kapasitas_kursi
-HAVING total_planes > 1;
+HAVING total_pesawat > 1;
 
 
 -- 7# operator lainnya (AS, CASE, DISTINCT, INTO, LIMIT)
@@ -195,7 +195,7 @@ SELECT id_pesawat, kapasitas_kursi,
     CASE 
         WHEN kapasitas_kursi > 700 THEN 'KAPASITAS TINGGI'
         WHEN kapasitas_kursi BETWEEN 100 AND 700 THEN 'KAPASITAS SEDANG'
-        ELSE 'Low Capacity'
+        ELSE 'KAPASITAS KECIL'
     END AS kapasitas_kategori
 FROM kapasitas;
 
@@ -215,7 +215,7 @@ SELECT id_pesawat, kapasitas_kursi,
         WHEN kapasitas_kursi > 700 THEN 'JUMBO PASSENGER JETS'
         WHEN kapasitas_kursi > 100 THEN 'MEDIUM PASSENGER JETS'
         ELSE 'MINI PASSENGER JETS'
-    END AS aircraft_class
+    END AS kelas_pesawat
 FROM kapasitas;
 
 
@@ -237,7 +237,7 @@ SELECT AVG(kapasitas_kursi) AS kapasitas_average FROM kapasitas;
 
 -- IF()
 SELECT id_pesawat, kapasitas_kursi,
-IF(kapasitas_kursi > 100, 'Besar', 'Kecil') AS jumlah_kursi
+IF(kapasitas_kursi > 100, 'BESAR', 'KECIL') AS jumlah_kursi
 FROM kapasitas;
 
 -- IFNULL()
