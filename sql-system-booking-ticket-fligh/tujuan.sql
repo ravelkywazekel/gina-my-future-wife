@@ -243,15 +243,15 @@ SELECT COUNT(*) AS total_entries FROM tujuan;
 SELECT id_penumpang, tujuan_pesawat, IF(tujuan_pesawat = 'BALI', 'PADANG', 'PEKANBARU') AS tujuan_jenis
 FROM tujuan;
 
--- IFNULL()
-INSERT INTO tujuan (id_pesawat, id_penumpang, tujuan_pesawat) VALUES ('PE008', NULL, 'TIDAK DIKENAL');
-SELECT id_penumpang,
-IFNULL(tujuan_pesawat, 'Unknown Destination') AS destination_status
+-- IFNULL() 
+INSERT INTO tujuan (id_pesawat, id_penumpang, tujuan_pesawat) VALUES ('PE008', NULL, 'UNKNOWN');
+SELECT id_penumpang, 
+IFNULL(tujuan_pesawat, 'Destinasi tidak diketahui') AS status_destinasi
 FROM tujuan;
 
---COALESCE()
-SELECT id_penumpang,
-COALESCE(tujuan_pesawat, 'No Destination') AS destination_info
+-- COALESCE()
+SELECT id_penumpang, 
+COALESCE(tujuan_pesawat, 'Tidak ada destinasi') AS info_destinasi
 FROM tujuan;
 
 DELETE FROM tujuan WHERE id_pesawat = 'PE008';
