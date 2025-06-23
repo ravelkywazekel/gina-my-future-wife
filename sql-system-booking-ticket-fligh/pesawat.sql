@@ -282,3 +282,8 @@ UNION
 SELECT p.nama AS 'Nama Penumpang', pes.id_pesawat AS 'ID Pesawat', pes.jenis_pesawat AS 'Jenis Pesawat'
 FROM penumpang p
 RIGHT JOIN pesawat pes ON p.id_penumpang = SUBSTRING(pes.id_pesawat, 3, 4);
+
+-- SELF JOIN
+SELECT p1.nama AS 'Nama Penumpang 1', p2.nama AS 'Nama Penumpang 2'
+FROM penumpang p1
+JOIN penumpang p2 ON p1.jenis_kelamin = p2.jenis_kelamin AND p1.id_penumpang != p2.id_penumpang;
