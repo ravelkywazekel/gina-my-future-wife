@@ -291,3 +291,8 @@ UNION
 SELECT p.id_penumpang, p.nama, p.jenis_kelamin, k.id_pesawat, k.kapasitas_kursi
 FROM penumpang p
 RIGHT JOIN kapasitas k ON p.id_penumpang = k.id_kursi; 
+
+-- SELF JOIN
+SELECT a.nama AS 'Passenger 1', b.nama AS 'Passenger 2', a.jenis_kelamin AS 'Gender'
+FROM penumpang a
+JOIN penumpang b ON a.jenis_kelamin = b.jenis_kelamin AND a.id_penumpang < b.id_penumpang; 
