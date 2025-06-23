@@ -296,3 +296,8 @@ UNION
 SELECT p.id_maskapai, p.id_operator, p.status_penerbangan, k.id_pesawat, k.kapasitas_kursi
 FROM penerbangan p
 RIGHT JOIN kapasitas k ON p.id_operator = k.id_kursi;
+
+-- SELF JOIN
+SELECT a.id_maskapai AS 'Maskapai 1', b.id_maskapai AS 'Maskapai 2', a.status_penerbangan AS 'Status'
+FROM penerbangan a
+JOIN penerbangan b ON a.status_penerbangan = b.status_penerbangan AND a.id_maskapai < b.id_maskapai; 
