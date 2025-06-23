@@ -244,7 +244,21 @@ FROM tiket;
 
 
 -- 9# operator JOIN (INNER JOIN, RIGHT JOIN, LEFT JOIN, FULL JOIN)
+CREATE TABLE kursi (
+    id_kursi CHAR(3) UNIQUE PRIMARY KEY,
+    class ENUM('EKONOMI', 'FIRST CLASS', 'BISNIS'),
+    availability ENUM('TERSEDIA', 'TERISI'),
+    id_operator CHAR(3) UNIQUE,
+    pembayaran ENUM('DEBIT', 'CREDIT', 'CASH')
+);
 
+
+INSERT INTO kursi (id_kursi, class, availability, id_operator, pembayaran) VALUES
+('45A', 'EKONOMI', 'TERSEDIA', 'OP1', 'DEBIT'),
+('07A', 'FIRST CLASS', 'TERSEDIA', 'OP2', 'CASH'),
+('50A', 'EKONOMI', 'TERSEDIA', 'OP3', 'CREDIT'),
+('53D', 'EKONOMI', 'TERSEDIA', 'OP4', 'DEBIT'),
+('42E', 'BISNIS', 'TERISI', 'OP5', 'CASH');
 -- INNER JOIN
 SELECT t.no_tiket AS 'Nomor Tiket', t.tanggal_penerbangan AS 'Tanggal Penerbangan', k.class AS 'Kelas', k.availability AS 'Ketersediaan'
 FROM tiket t
