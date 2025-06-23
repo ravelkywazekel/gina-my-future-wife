@@ -113,3 +113,131 @@ WHERE tanggal_penerbangan = '2025-04-05';
 -- **CONTOH SEMUA PENGGUNAAN OPERATOR**
 
 -- 1# operator logika (AND, OR, NOT)
+-- AND
+SELECT * FROM tiket
+WHERE tanggal_penerbangan = '2025-04-05' AND jadwal = '13:15:00';
+
+-- OR
+SELECT * FROM tiket
+WHERE tanggal_penerbangan = '2025-04-05' OR tanggal_penerbangan = '2025-04-10';
+
+-- NOT
+SELECT * FROM tiket
+WHERE NOT tanggal_penerbangan = '2025-04-05';
+
+
+-- 2# operator NULL (IS NULL, IS NOT NULL)
+-- IS NULL
+SELECT * FROM tiket
+WHERE id_kursi IS NULL;
+
+-- IS NOT NULL
+SELECT * FROM tiket
+WHERE id_kursi IS NOT NULL;
+
+
+-- 3# operator pencocokan pola (LIKE)
+SELECT * FROM tiket
+WHERE no_tiket LIKE 'SQ%';
+
+
+-- 4# operator set (IN, BETWEEN)
+-- IN
+SELECT * FROM tiket
+WHERE no_tiket IN ('SQ001', 'SQ003');
+
+-- BETWEEN
+SELECT * FROM tiket
+WHERE tanggal_penerbangan BETWEEN '2025-04-05' AND '2025-04-08';
+
+
+-- 5# operator query (UNION, UNION ALL, EXISTS, ANY, ALL)
+-- UNION
+SELECT no_tiket FROM tiket WHERE id_kursi = '45A'
+UNION
+SELECT no_tiket FROM tiket WHERE id_kursi = '07A';
+
+-- UNION ALL
+SELECT no_tiket FROM tiket WHERE id_kursi = '45A'
+UNION ALL
+SELECT no_tiket FROM tiket WHERE id_kursi = '07A';
+
+-- EXISTS
+SELECT * FROM tiket
+WHERE EXISTS (SELECT 1 FROM tiket WHERE id_pemesanan = 'PM001');
+
+-- ANY
+SELECT * FROM tiket
+WHERE tanggal_penerbangan > ANY (SELECT tanggal_penerbangan FROM tiket WHERE id_pemesanan = 'PM001');
+
+-- ALL
+SELECT * FROM tiket
+WHERE tanggal_penerbangan > ALL (SELECT tanggal_penerbangan FROM tiket WHERE id_pemesanan = 'PM001');
+
+
+-- 6# operator pengurutan dan pengelompokan (ORDER BY, GROUP BY, HAVING)
+-- ORDER BY
+SELECT * FROM tiket
+ORDER BY tanggal_penerbangan;
+
+-- GROUP BY
+SELECT tanggal_penerbangan, COUNT(*) AS jumlah_tiket
+FROM tiket
+GROUP BY tanggal_penerbangan;
+
+-- HAVING
+SELECT tanggal_penerbangan, COUNT(*) AS jumlah_tiket
+FROM tiket
+GROUP BY tanggal_penerbangan
+HAVING COUNT(*) > 1;
+
+
+-- #7 operator lainnya (AS, CASE, DISTINCT, INTO, LIMIT)
+-- AS
+SELECT no_tiket AS 'Nomor Tiket', tanggal_penerbangan AS 'Tanggal Penerbangan' FROM tiket;
+
+-- CASE
+SELECT no_tiket,
+       CASE 
+           WHEN jadwal < '12:00:00' THEN 'Pagi'
+           WHEN jadwal < '18:00:00' THEN 'Siang'
+           ELSE 'Malam'
+       END AS 'Waktu Penerbangan'
+FROM tiket;
+
+-- DISTINCT
+SELECT DISTINCT tanggal_penerbangan FROM tiket;
+
+-- INTO
+CREATE TABLE IF NOT EXISTS tiket_summary AS
+SELECT tanggal_penerbangan, COUNT(*) AS jumlah_tiket
+FROM tiket
+GROUP BY tanggal_penerbangan;
+
+-- LIMIT
+SELECT * FROM tiket
+LIMIT 3;
+
+
+-- 8# operator function (MIN(), MAX(), COUNT(), IF() IFNULL(), COALESCE ())
+-- MIN()
+SELECT MIN(tanggal_penerbangan) AS 'Tanggal Penerbangan Terawal' FROM tiket;
+
+-- MAX()
+SELECT MAX(tanggal_penerbangan) AS 'Tanggal Penerbangan Terakhir' FROM tiket;
+
+-- COUNT()
+SELECT COUNT(*) AS 'Total Tiket' FROM tiket;
+
+-- IF()
+SELECT no_tiket, 
+       IF(jadwal < '12:00:00', 'Pagi', 'Siang/Malam') AS 'Waktu'
+FROM tiket;
+
+-- IFNULL()
+SELECT no_tiket, IFNULL(id_kursi, 'Tidak Ada Kursi') AS 'Kursi'
+FROM tiket;
+
+-- COALESCE()
+SELECT no_tiket, COALESCE(id_kursi, 'Tidak Ada Kursi') AS 'Kursi'
+FROM tiket;
