@@ -275,3 +275,8 @@ UNION
 SELECT o.id_operator, o.nama_operator, d.ceo_name
 FROM operator o
 RIGHT JOIN department d ON o.id_operator = d.id_operator;
+
+-- SELF JOIN
+SELECT a.id_department AS 'Department 1', a.ceo_name AS 'CEO 1', b.id_department AS 'Department 2', b.ceo_name AS 'CEO 2'
+FROM department a
+JOIN department b ON a.ceo_name = b.ceo_name AND a.id_department < b.id_department;
