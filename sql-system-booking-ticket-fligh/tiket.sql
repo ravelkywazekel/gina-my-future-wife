@@ -285,3 +285,9 @@ UNION
 SELECT t.no_tiket AS 'Nomor Tiket', t.tanggal_penerbangan AS 'Tanggal Penerbangan', k.class AS 'Kelas', k.availability AS 'Ketersediaan'
 FROM tiket t
 RIGHT JOIN kursi k ON t.id_kursi = k.id_kursi;
+
+
+-- SELF JOIN
+SELECT k1.id_kursi AS 'Kursi Tersedia', k2.id_kursi AS 'Kursi Terisi'
+FROM kursi k1
+JOIN kursi k2 ON k1.availability = 'TERSEDIA' AND k2.availability = 'TERISI';
