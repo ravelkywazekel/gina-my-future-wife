@@ -251,42 +251,27 @@ INSERT INTO penumpang (id_penumpang, nama, jenis_kelamin) VALUES
 ('P005', 'ABU LAHAB', 'PRIA');
 
 -- INNER JOIN
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pem.no_tiket AS 'Nomor Tiket',
-    pem.harga AS 'Harga'
+SELECT p.nama AS 'Nama Penumpang', pem.no_tiket AS 'Nomor Tiket', pem.harga AS 'Harga'
 FROM penumpang p
 INNER JOIN pemesanan pem ON p.id_penumpang = pem.id_penumpang;
 
 -- LEFT JOIN
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pem.no_tiket AS 'Nomor Tiket',
-    pem.harga AS 'Harga'
+SELECT p.nama AS 'Nama Penumpang', pem.no_tiket AS 'Nomor Tiket', pem.harga AS 'Harga'
 FROM penumpang p
 LEFT JOIN pemesanan pem ON p.id_penumpang = pem.id_penumpang;
 
 -- RIGHT JOIN 
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pem.no_tiket AS 'Nomor Tiket',
-    pem.harga AS 'Harga'
+SELECT p.nama AS 'Nama Penumpang', pem.no_tiket AS 'Nomor Tiket', pem.harga AS 'Harga'
 FROM penumpang p
 RIGHT JOIN pemesanan pem ON p.id_penumpang = pem.id_penumpang;
 
 -- FULL JOIN
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pem.no_tiket AS 'Nomor Tiket',
-    pem.harga AS 'Harga'
+SELECT p.nama AS 'Nama Penumpang', pem.no_tiket AS 'Nomor Tiket', pem.harga AS 'Harga'
 FROM penumpang p
 LEFT JOIN pemesanan pem ON p.id_penumpang = pem.id_penumpang
 
 UNION
 
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pem.no_tiket AS 'Nomor Tiket',
-    pem.harga AS 'Harga'
+SELECT p.nama AS 'Nama Penumpang', pem.no_tiket AS 'Nomor Tiket', pem.harga AS 'Harga'
 FROM penumpang p
 RIGHT JOIN pemesanan pem ON p.id_penumpang = pem.id_penumpang;
