@@ -258,42 +258,27 @@ INSERT INTO penumpang (id_penumpang, nama, jenis_kelamin) VALUES
 ('P005', 'ABU LAHAB', 'PRIA');
 
 -- INNER JOIN
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pes.id_pesawat AS 'ID Pesawat',
-    pes.jenis_pesawat AS 'Jenis Pesawat'
+SELECT p.nama AS 'Nama Penumpang', pes.id_pesawat AS 'ID Pesawat', pes.jenis_pesawat AS 'Jenis Pesawat'
 FROM penumpang p
 INNER JOIN pesawat pes ON p.id_penumpang = SUBSTRING(pes.id_pesawat, 3, 4);  -- Assuming id_penumpang matches part of id_pesawat
 
 -- LEFT JOIN 
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pes.id_pesawat AS 'ID Pesawat',
-    pes.jenis_pesawat AS 'Jenis Pesawat'
+SELECT p.nama AS 'Nama Penumpang', pes.id_pesawat AS 'ID Pesawat', pes.jenis_pesawat AS 'Jenis Pesawat'
 FROM penumpang p
 LEFT JOIN pesawat pes ON p.id_penumpang = SUBSTRING(pes.id_pesawat, 3, 4);  
 
 -- RIGHT JOIN 
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pes.id_pesawat AS 'ID Pesawat',
-    pes.jenis_pesawat AS 'Jenis Pesawat'
+SELECT p.nama AS 'Nama Penumpang', pes.id_pesawat AS 'ID Pesawat', pes.jenis_pesawat AS 'Jenis Pesawat'
 FROM penumpang p
 RIGHT JOIN pesawat pes ON p.id_penumpang = SUBSTRING(pes.id_pesawat, 3, 4);  -- Assuming id_penumpang matches part of id_pesawat
 
 -- FULL JOIN
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pes.id_pesawat AS 'ID Pesawat',
-    pes.jenis_pesawat AS 'Jenis Pesawat'
+SELECT p.nama AS 'Nama Penumpang', pes.id_pesawat AS 'ID Pesawat', pes.jenis_pesawat AS 'Jenis Pesawat'
 FROM penumpang p
 LEFT JOIN pesawat pes ON p.id_penumpang = SUBSTRING(pes.id_pesawat, 3, 4)  
     
 UNION
 
-SELECT 
-    p.nama AS 'Nama Penumpang',
-    pes.id_pesawat AS 'ID Pesawat',
-    pes.jenis_pesawat AS 'Jenis Pesawat'
+SELECT p.nama AS 'Nama Penumpang', pes.id_pesawat AS 'ID Pesawat', pes.jenis_pesawat AS 'Jenis Pesawat'
 FROM penumpang p
 RIGHT JOIN pesawat pes ON p.id_penumpang = SUBSTRING(pes.id_pesawat, 3, 4);
