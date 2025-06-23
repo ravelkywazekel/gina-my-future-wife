@@ -20,7 +20,8 @@ CREATE TABLE tiket (
     id_pemesanan VARCHAR(5) UNIQUE NOT NULL,
     tanggal_penerbangan DATE,
     id_kursi VARCHAR(3) UNIQUE,
-    jadwal TIME
+    jadwal TIME,
+    CONSTRAINT chk_jadwal CHECK (jadwal BETWEEN '04:00:00' AND '23:00:00')
 );
 
 
