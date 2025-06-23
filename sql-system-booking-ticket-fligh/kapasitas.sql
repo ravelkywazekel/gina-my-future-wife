@@ -300,3 +300,9 @@ UNION
 SELECT k.id_pesawat, k.id_kursi, p.id_penerbangan, p.bandara_tujuan
 FROM kapasitas k
 RIGHT JOIN penerbangan p ON k.id_pesawat = p.id_pesawat;
+
+-- SELF JOIN
+SELECT a.id_penerbangan AS 'Flight 1', a.bandara_asal AS 'Departure Airport',
+    a.bandara_tujuan AS 'Destination Airport 1', b.id_penerbangan AS 'Flight 2', b.bandara_tujuan AS 'Destination Airport 2'
+FROM penerbangan a
+JOIN penerbangan b ON a.bandara_asal = b.bandara_asal AND a.id_penerbangan < b.id_penerbangan; 
