@@ -275,3 +275,8 @@ UNION
 SELECT p.nama AS 'Nama Penumpang', pem.no_tiket AS 'Nomor Tiket', pem.harga AS 'Harga'
 FROM penumpang p
 RIGHT JOIN pemesanan pem ON p.id_penumpang = pem.id_penumpang;
+
+-- SELF JOIN
+SELECT a.nama AS 'Passenger 1', b.nama AS 'Passenger 2', a.jenis_kelamin AS 'Gender'
+FROM penumpang a
+JOIN penumpang b ON a.jenis_kelamin = b.jenis_kelamin AND a.id_penumpang < b.id_penumpang; 
