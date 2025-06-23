@@ -19,7 +19,8 @@ CREATE TABLE tujuan (
     antrian INT PRIMARY KEY AUTO_INCREMENT,
     id_pesawat VARCHAR(5) UNIQUE,
     id_penumpang VARCHAR(4) UNIQUE,
-    tujuan_pesawat VARCHAR(15) NOT NULL
+    tujuan_pesawat VARCHAR(15) NOT NULL,
+    CONSTRAINT chk_tujuan_pesawat CHECK (tujuan_pesawat = 'BALI')
 );
 
 
