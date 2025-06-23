@@ -241,3 +241,32 @@ FROM tiket;
 -- COALESCE()
 SELECT no_tiket, COALESCE(id_kursi, 'Tidak Ada Kursi') AS 'Kursi'
 FROM tiket;
+
+
+-- 9# operator JOIN (INNER JOIN, RIGHT JOIN, LEFT JOIN, FULL JOIN)
+
+-- INNER JOIN
+SELECT t.no_tiket AS 'Nomor Tiket', t.tanggal_penerbangan AS 'Tanggal Penerbangan', k.class AS 'Kelas', k.availability AS 'Ketersediaan'
+FROM tiket t
+INNER JOIN kursi k ON t.id_kursi = k.id_kursi;
+
+-- LEFT JOIN
+SELECT t.no_tiket AS 'Nomor Tiket', t.tanggal_penerbangan AS 'Tanggal Penerbangan', k.class AS 'Kelas', k.availability AS 'Ketersediaan'
+FROM tiket t
+LEFT JOIN kursi k ON t.id_kursi = k.id_kursi;
+
+-- RIGHT JOIN 
+SELECT t.no_tiket AS 'Nomor Tiket', t.tanggal_penerbangan AS 'Tanggal Penerbangan', k.class AS 'Kelas', k.availability AS 'Ketersediaan'
+FROM tiket t
+RIGHT JOIN kursi k ON t.id_kursi = k.id_kursi;
+
+-- FULL JOIN 
+SELECT t.no_tiket AS 'Nomor Tiket', t.tanggal_penerbangan AS 'Tanggal Penerbangan', k.class AS 'Kelas', k.availability AS 'Ketersediaan'
+FROM tiket t
+LEFT JOIN kursi k ON t.id_kursi = k.id_kursi
+
+UNION
+
+SELECT t.no_tiket AS 'Nomor Tiket', t.tanggal_penerbangan AS 'Tanggal Penerbangan', k.class AS 'Kelas', k.availability AS 'Ketersediaan'
+FROM tiket t
+RIGHT JOIN kursi k ON t.id_kursi = k.id_kursi;
