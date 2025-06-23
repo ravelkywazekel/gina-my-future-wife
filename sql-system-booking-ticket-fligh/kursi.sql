@@ -303,3 +303,8 @@ UNION
 SELECT k.id_kursi, k.class, k.availability, o.nama_operator
 FROM kursi k
 RIGHT JOIN operator o ON k.id_operator = o.id_operator;
+
+-- SELF JOIN
+SELECT k1.id_kursi AS 'Kursi Tersedia', k2.id_kursi AS 'Kursi Terisi'
+FROM kursi k1
+LEFT JOIN kursi k2 ON k1.availability = 'TERSEDIA' AND k2.availability = 'TERISI';
