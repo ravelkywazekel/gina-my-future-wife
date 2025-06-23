@@ -308,3 +308,10 @@ RIGHT JOIN operator o ON k.id_operator = o.id_operator;
 SELECT k1.id_kursi AS 'Kursi Tersedia', k2.id_kursi AS 'Kursi Terisi'
 FROM kursi k1
 LEFT JOIN kursi k2 ON k1.availability = 'TERSEDIA' AND k2.availability = 'TERISI';
+
+-- SELF JOIN
+SELECT a.id_operator AS 'Operator ID 1', a.nama_operator AS 'Operator Name', 
+    a.email AS 'Email 1',  b.id_operator AS 'Operator ID 2', b.email AS 'Email 2'
+FROM operator a
+JOIN operator b ON a.nama_operator = b.nama_operator AND a.id_operator < b.id_operator
+ORDER BY a.nama_operator;
