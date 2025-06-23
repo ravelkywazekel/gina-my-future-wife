@@ -296,3 +296,8 @@ UNION
 SELECT m.id_maskapai, m.nama_maskapai, o.email, o.nama_operator
 FROM maskapai m
 RIGHT JOIN operator o ON m.nama_maskapai = o.nama_operator;
+
+-- SELF JOIN
+SELECT a.id_operator AS 'Operator 1', a.nama_operator AS 'Name 1', b.id_operator AS 'Operator 2', b.nama_operator AS 'Name 2'
+FROM operator a
+JOIN operator b ON a.nama_operator = b.nama_operator AND a.id_operator < b.id_operator;
