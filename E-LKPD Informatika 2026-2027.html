@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>E-LKPD Informatika 2026/2027</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --blue-dark:   #0F2A5E;
+    --blue-mid:    #1A4BAA;
+    --blue-light:  #3B82F6;
+    --accent:      #00C6A7;
+    --accent2:     #F59E0B;
+    --soft-bg:     #F0F6FF;
+    --card-bg:     #FFFFFF;
+    --border:      #D1E3FF;
+    --text-main:   #0F2A5E;
+    --text-body:   #374151;
+    --text-muted:  #6B7280;
+    --mono:        'JetBrains Mono', monospace;
+    --sans:        'Plus Jakarta Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--soft-bg);
+    color: var(--text-body);
+    line-height: 1.65;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--blue-dark);
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; gap: 10px;
+    padding: 0 24px; height: 56px;
+    box-shadow: 0 2px 12px rgba(15,42,94,.35);
+  }
+  nav .logo { color: var(--accent); font-weight: 800; font-size: 1rem; letter-spacing: .5px; }
+  nav .breadcrumb { color: rgba(255,255,255,.5); font-size: .78rem; margin-left: auto; }
+  .nav-tabs { display: flex; gap: 4px; margin-left: 32px; }
+  .nav-tab {
+    color: rgba(255,255,255,.65); font-size: .8rem; font-weight: 500;
+    padding: 6px 14px; border-radius: 6px; cursor: pointer;
+    border: none; background: transparent; transition: all .2s;
+  }
+  .nav-tab:hover { background: rgba(255,255,255,.1); color: #fff; }
+  .nav-tab.active { background: var(--accent); color: var(--blue-dark); font-weight: 700; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 60%, #1e6eb5 100%);
+    padding: 56px 40px 64px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-inner { max-width: 860px; margin: auto; position: relative; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(0,198,167,.15); border: 1px solid rgba(0,198,167,.4);
+    color: var(--accent); font-size: .75rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    color: #fff; font-size: clamp(1.7rem, 4vw, 2.6rem);
+    font-weight: 800; line-height: 1.2; margin-bottom: 10px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero p { color: rgba(255,255,255,.75); font-size: 1rem; max-width: 540px; }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 20px; margin-top: 28px;
+  }
+  .hero-meta-item {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 10px; padding: 10px 18px;
+    color: #fff;
+  }
+  .hero-meta-item .label { font-size: .7rem; opacity: .6; text-transform: uppercase; letter-spacing: .8px; }
+  .hero-meta-item .value { font-size: .9rem; font-weight: 700; margin-top: 2px; }
+
+  /* ── LAYOUT ── */
+  .page { display: none; }
+  .page.active { display: block; }
+  .container { max-width: 900px; margin: 36px auto; padding: 0 24px 60px; }
+
+  /* ── SEMESTER HEADER ── */
+  .sem-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+  }
+  .sem-badge {
+    background: var(--blue-dark); color: #fff;
+    font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 8px;
+  }
+  .sem-badge.genap { background: #0e7a5a; }
+  .sem-line { flex: 1; height: 2px; background: var(--border); border-radius: 2px; }
+
+  /* ── TP CARD ── */
+  .tp-card {
+    background: var(--card-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 28px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(59,130,246,.07);
+    transition: box-shadow .2s;
+  }
+  .tp-card:hover { box-shadow: 0 6px 28px rgba(59,130,246,.13); }
+
+  .tp-head {
+    background: linear-gradient(90deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+    padding: 18px 24px;
+    display: flex; align-items: flex-start; gap: 16px;
+  }
+  .tp-head.genap {
+    background: linear-gradient(90deg, #064e3b 0%, #047857 100%);
+  }
+  .tp-num {
+    background: rgba(255,255,255,.15); color: #fff;
+    font-family: var(--mono); font-size: .75rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 6px; white-space: nowrap; margin-top: 2px;
+  }
+  .tp-title-block .tp-label { color: var(--accent); font-size: .7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .tp-title-block .tp-title { color: #fff; font-size: 1rem; font-weight: 700; margin-top: 2px; }
+  .tp-title-block .tp-sub   { color: rgba(255,255,255,.65); font-size: .82rem; margin-top: 4px; }
+  .tp-jp {
+    margin-left: auto; text-align: right;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 8px; padding: 6px 14px;
+  }
+  .tp-jp .jp-val { color: var(--accent); font-size: 1.3rem; font-weight: 800; line-height: 1; }
+  .tp-jp .jp-label { color: rgba(255,255,255,.6); font-size: .65rem; text-transform: uppercase; letter-spacing: .8px; }
+
+  /* ── SECTION INSIDE CARD ── */
+  .tp-body { padding: 24px; }
+  .section-label {
+    font-size: .72rem; font-weight: 700; letter-spacing: 1.2px;
+    text-transform: uppercase; color: var(--blue-light);
+    margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* Tujuan box */
+  .tujuan-box {
+    background: var(--soft-bg);
+    border-left: 3px solid var(--blue-light);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    font-size: .88rem;
+    margin-bottom: 22px;
+    color: var(--text-main);
+  }
+
+  /* Materi grid */
+  .materi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+  .materi-item {
+    background: var(--soft-bg); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px;
+    font-size: .82rem; display: flex; gap: 10px; align-items: flex-start;
+  }
+  .materi-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); margin-top: 5px; flex-shrink: 0; }
+
+  /* Kegiatan steps */
+  .kegiatan-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .kegiatan-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 14px; font-size: .84rem;
+  }
+  .step-num {
+    background: var(--blue-mid); color: #fff;
+    font-family: var(--mono); font-size: .7rem; font-weight: 700;
+    width: 22px; height: 22px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .kegiatan-step.genap .step-num { background: #047857; }
+
+  /* Tugas / soal */
+  .soal-block {
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+  .soal-head {
+    background: var(--soft-bg);
+    padding: 9px 16px;
+    font-size: .75rem; font-weight: 700; letter-spacing: .8px;
+    text-transform: uppercase; color: var(--blue-dark);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .soal-head .icon { font-size: 1rem; }
+  .soal-item {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    font-size: .86rem; color: var(--text-body);
+  }
+  .soal-item strong { color: var(--blue-dark); }
+
+  /* Jawab area */
+  .jawab-area {
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    min-height: 90px;
+    margin-top: 8px;
+    padding: 10px 14px;
+    background: #fafcff;
+    font-size: .82rem; color: var(--text-muted);
+    font-style: italic;
+  }
+
+  /* Penilaian */
+  .penilaian-table { width: 100%; border-collapse: collapse; font-size: .82rem; margin-bottom: 8px; }
+  .penilaian-table th {
+    background: var(--blue-dark); color: #fff;
+    padding: 8px 12px; text-align: left; font-weight: 600;
+  }
+  .penilaian-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+  .penilaian-table tr:last-child td { border-bottom: none; }
+  .penilaian-table tr:nth-child(even) td { background: var(--soft-bg); }
+
+  /* Refleksi */
+  .refleksi-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .refleksi-item {
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; text-align: center; font-size: .78rem;
+  }
+  .refleksi-item .emoji { font-size: 1.6rem; }
+  .refleksi-item p { color: var(--text-muted); margin-top: 4px; }
+
+  /* Pseudocode box */
+  .pseudo-box {
+    background: var(--blue-dark);
+    border-radius: 10px; padding: 16px 20px;
+    font-family: var(--mono); font-size: .82rem;
+    color: #a5f3fc; line-height: 1.8; margin-bottom: 10px;
+  }
+  .pseudo-box .kw { color: #f472b6; }
+  .pseudo-box .cm { color: #6b7280; }
+  .pseudo-box .val { color: var(--accent); }
+
+  /* Divider */
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* Info chip */
+  .chip {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--soft-bg); border: 1px solid var(--border);
+    border-radius: 20px; padding: 3px 10px;
+    font-size: .72rem; font-weight: 600; color: var(--blue-mid);
+    margin-right: 6px; margin-bottom: 6px;
+  }
+
+  /* Cover page */
+  .cover-page {
+    display: none;
+    max-width: 700px; margin: 40px auto; padding: 0 24px 60px;
+    text-align: center;
+  }
+  .cover-page.active { display: block; }
+  .cover-school {
+    background: var(--blue-dark); color: #fff;
+    border-radius: 16px; padding: 36px 40px; margin-bottom: 24px;
+  }
+  .cover-school .school-logo {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: rgba(255,255,255,.12); margin: 0 auto 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+  }
+  .cover-school h2 { font-size: 1.1rem; font-weight: 800; margin-bottom: 4px; }
+  .cover-school p  { font-size: .85rem; opacity: .7; }
+  .cover-title { font-size: 2rem; font-weight: 800; color: var(--blue-dark); margin-bottom: 8px; }
+  .cover-title span { color: var(--accent); }
+  .cover-desc { font-size: .95rem; color: var(--text-muted); margin-bottom: 30px; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .cover-info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin-bottom: 28px; text-align: left;
+  }
+  .cover-info-card {
+    background: var(--card-bg); border: 1.5px solid var(--border);
+    border-radius: 12px; padding: 14px 18px;
+  }
+  .cover-info-card .ci-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .8px; color: var(--text-muted); font-weight: 700; }
+  .cover-info-card .ci-val   { font-size: .95rem; font-weight: 700; color: var(--blue-dark); margin-top: 4px; }
+  .start-btn {
+    background: var(--blue-mid); color: #fff;
+    border: none; border-radius: 10px; padding: 13px 36px;
+    font-size: 1rem; font-weight: 700; cursor: pointer;
+    transition: background .2s;
+  }
+  .start-btn:hover { background: var(--blue-dark); }
+
+  /* Responsive */
+  @media(max-width:600px){
+    .hero { padding: 36px 20px 48px; }
+    .materi-grid { grid-template-columns: 1fr; }
+    .refleksi-grid { grid-template-columns: 1fr; }
+    .cover-info-grid { grid-template-columns: 1fr; }
+    .tp-jp { display: none; }
+  }
+
+  /* print */
+  @media print {
+    nav, .nav-tabs { display: none !important; }
+    .page { display: block !important; }
+    .hero { background: #0F2A5E !important; -webkit-print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">⚡ E-LKPD Informatika</span>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('cover')">🏠 Beranda</button>
+    <button class="nav-tab" onclick="showPage('ganjil')">📘 Semester Ganjil</button>
+    <button class="nav-tab" onclick="showPage('genap')">📗 Semester Genap</button>
+  </div>
+  <span class="breadcrumb">T.A 2026/2027</span>
+</nav>
+
+<!-- ══════════════════════════════════
+     COVER PAGE
+══════════════════════════════════ -->
+<div id="page-cover" class="cover-page active">
+
+  <div class="cover-school">
+    <div class="school-logo">🎓</div>
+    <h2>UIN SJECH M. DJAMIL DJAMBEK BUKITTINGGI</h2>
+    <p>Fakultas Tarbiyah dan Ilmu Keguruan · Program Studi PTIK</p>
+  </div>
+
+  <h1 class="cover-title">E-LKPD <span>Informatika</span></h1>
+  <p class="cover-desc">
+    Elektronik Lembar Kerja Peserta Didik berbasis Kurikulum Merdeka.<br>
+    Mencakup seluruh Tujuan Pembelajaran (TP1–TP5) dalam satu tahun ajaran.
+  </p>
+
+  <div class="cover-info-grid">
+    <div class="cover-info-card">
+      <div class="ci-label">Mata Pelajaran</div>
+      <div class="ci-val">Informatika</div>
+    </div>
+    <div class="cover-info-card">
+      <div class="ci-label">Tahun Ajaran</div>
+      <div class="ci-val">2026 / 2027</div>
+    </div>
+    <div class="cover-info-card">
+      <div class="ci-label">Total Jam Pelajaran</div>
+      <div class="ci-val">26 JP (Ganjil 14 JP · Genap 12 JP)</div>
+    </div>
+    <div class="cover-info-card">
+      <div class="ci-label">Total Tahap Pembelajaran</div>
+      <div class="ci-val">5 Tujuan Pembelajaran (TP)</div>
+    </div>
+    <div class="cover-info-card">
+      <div class="ci-label">Disusun Oleh</div>
+      <div class="ci-val">Gina Febriani · 2524060</div>
+    </div>
+    <div class="cover-info-card">
+      <div class="ci-label">Dosen Pengampu</div>
+      <div class="ci-val">Ilian Ikhsan</div>
+    </div>
+  </div>
+
+  <button class="start-btn" onclick="showPage('ganjil')">Mulai Semester Ganjil →</button>
+</div>
+
+
+<!-- ══════════════════════════════════
+     SEMESTER GANJIL
+══════════════════════════════════ -->
+<div id="page-ganjil" class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">📘 Semester Ganjil</div>
+    <h1>E-LKPD Informatika<br><span>Semester Ganjil</span></h1>
+    <p>Materi berpusat pada pemahaman data terstruktur, lembar kerja pengolah data, dan penulisan instruksi logis dalam format pseudocode.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="label">Total JP</div><div class="value">14 JP Efektif</div></div>
+      <div class="hero-meta-item"><div class="label">Periode</div><div class="value">Juli – Desember 2026</div></div>
+      <div class="hero-meta-item"><div class="label">Tujuan Pembelajaran</div><div class="value">TP 1 · TP 2 · TP 3</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="sem-header">
+    <span class="sem-badge">Ganjil 2026/2027</span>
+    <div class="sem-line"></div>
+    <span style="font-size:.8rem;color:var(--text-muted);">3 Tujuan Pembelajaran · 14 JP</span>
+  </div>
+
+  <!-- ───────────────── TP 1 ───────────────── -->
+  <div class="tp-card">
+    <div class="tp-head">
+      <div class="tp-num">TP 1</div>
+      <div class="tp-title-block">
+        <div class="tp-label">Tahap 1 · Semester Ganjil</div>
+        <div class="tp-title">Konsep Himpunan Data Terstruktur & Lembar Kerja</div>
+        <div class="tp-sub">Memahami konsep himpunan data terstruktur dan konsep lembar kerja pengolah data</div>
+      </div>
+      <div class="tp-jp"><div class="jp-val">4</div><div class="jp-label">Jam Pelajaran</div></div>
+    </div>
+
+    <div class="tp-body">
+
+      <!-- Identitas -->
+      <div class="section-label">Identitas LKPD</div>
+      <div style="margin-bottom:18px;">
+        <span class="chip">📚 Informatika</span>
+        <span class="chip">🗓️ Juli – Agustus 2026</span>
+        <span class="chip">⏱️ 4 JP (4 × 40 menit)</span>
+        <span class="chip">🎯 Kognitif C2</span>
+      </div>
+
+      <!-- Tujuan -->
+      <div class="section-label">Tujuan Pembelajaran</div>
+      <div class="tujuan-box">
+        Peserta didik mampu <strong>memahami konsep himpunan data terstruktur</strong> dan konsep <strong>lembar kerja pengolah data</strong> sebagai dasar pengelolaan informasi digital.
+      </div>
+
+      <!-- Materi -->
+      <div class="section-label">Ringkasan Materi</div>
+      <div class="materi-grid">
+        <div class="materi-item"><div class="materi-dot"></div><div>Data terstruktur adalah data yang disusun dalam format terorganisasi seperti tabel dengan baris dan kolom.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div>Himpunan data terstruktur memiliki atribut (kolom) dan record (baris) yang konsisten dan terdefinisi.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div>Lembar kerja (spreadsheet) adalah media digital untuk menyimpan, mengelola, dan menganalisis data terstruktur.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div>Contoh lembar kerja: Microsoft Excel, Google Sheets, LibreOffice Calc — semua bekerja dengan sel, baris, dan kolom.</div></div>
+      </div>
+
+      <!-- Kegiatan -->
+      <div class="section-label">Langkah Kegiatan</div>
+      <div class="kegiatan-list">
+        <div class="kegiatan-step"><div class="step-num">1</div><div><strong>Eksplorasi Mandiri:</strong> Amati 3 contoh data di sekitarmu (daftar nama, jadwal, nilai). Identifikasi apakah data tersebut terstruktur atau tidak terstruktur.</div></div>
+        <div class="kegiatan-step"><div class="step-num">2</div><div><strong>Membaca & Mencatat:</strong> Baca materi tentang himpunan data terstruktur. Catat 5 ciri utama data terstruktur pada kolom catatan di bawah.</div></div>
+        <div class="kegiatan-step"><div class="step-num">3</div><div><strong>Praktik Lembar Kerja:</strong> Buka aplikasi lembar kerja (Excel/Google Sheets). Buat tabel sederhana berisi data pribadi 5 teman (nama, kelas, nilai IPA, nilai Matematika).</div></div>
+        <div class="kegiatan-step"><div class="step-num">4</div><div><strong>Diskusi & Presentasi:</strong> Bandingkan hasil tabel dengan kelompok lain. Diskusikan perbedaan struktur data yang dibuat.</div></div>
+      </div>
+
+      <!-- Soal -->
+      <div class="section-label">Soal & Tugas</div>
+      <div class="soal-block">
+        <div class="soal-head"><span class="icon">📝</span>Soal Pemahaman (Kerjakan Semua)</div>
+        <div class="soal-item">
+          <strong>1.</strong> Jelaskan dengan kalimatmu sendiri, apa yang dimaksud dengan <em>data terstruktur</em>? Berikan 2 contoh dalam kehidupan sehari-hari!
+          <div class="jawab-area">Jawaban: _______________________________________________</div>
+        </div>
+        <div class="soal-item">
+          <strong>2.</strong> Sebuah tabel memiliki kolom: Nama, Tanggal Lahir, Kota, Nomor HP. Tentukan mana yang disebut <em>atribut</em> dan mana yang disebut <em>record</em>!
+          <div class="jawab-area">Jawaban: _______________________________________________</div>
+        </div>
+        <div class="soal-item">
+          <strong>3.</strong> Apa perbedaan antara lembar kerja (spreadsheet) dengan dokumen teks biasa (Word/Docs) dalam hal penyimpanan data? Jelaskan minimal 3 perbedaan!
+          <div class="jawab-area">Jawaban: _______________________________________________</div>
+        </div>
+        <div class="soal-item">
+          <strong>4. (Praktik)</strong> Buatlah tabel data terstruktur yang berisi informasi 5 kota di Indonesia dengan kolom: Nama Kota, Provinsi, Populasi, Luas Wilayah (km²). Sertakan screenshot atau foto hasilnya!
+          <div class="jawab-area">Tempelkan screenshot di sini / Jawaban: _________________</div>
+        </div>
+      </div>
+
+      <!-- Rubrik Penilaian -->
+      <div class="section-label">Rubrik Penilaian</div>
+      <table class="penilaian-table">
+        <tr><th>Aspek</th><th>Indikator</th><th>Skor</th></tr>
+        <tr><td>Pemahaman Konsep</td><td>Mampu mendefinisikan data terstruktur dengan benar dan lengkap</td><td>0–25</td></tr>
+        <tr><td>Identifikasi Komponen</td><td>Mampu membedakan atribut dan record dengan tepat</td><td>0–25</td></tr>
+        <tr><td>Praktik Lembar Kerja</td><td>Tabel dibuat rapi, lengkap, dan sesuai instruksi</td><td>0–35</td></tr>
+        <tr><td>Kemampuan Analisis</td><td>Mampu membedakan spreadsheet dengan dokumen teks</td><td>0–15</td></tr>
+      </table>
+
+      <!-- Refleksi -->
+      <div class="section-label">Refleksi Diri</div>
+      <div class="refleksi-grid">
+        <div class="refleksi-item"><div class="emoji">😕</div><p>Belum paham, perlu bantuan guru</p></div>
+        <div class="refleksi-item"><div class="emoji">🙂</div><p>Cukup paham, bisa dengan sedikit bantuan</p></div>
+        <div class="refleksi-item"><div class="emoji">😄</div><p>Sudah paham, bisa menjelaskan ke teman</p></div>
+      </div>
+      <div class="jawab-area" style="min-height:60px;">Hal yang ingin saya pelajari lebih lanjut: _______________________</div>
+
+    </div><!-- end tp-body -->
+  </div><!-- end tp-card TP1 -->
+
+
+  <!-- ───────────────── TP 2 ───────────────── -->
+  <div class="tp-card">
+    <div class="tp-head">
+      <div class="tp-num">TP 2</div>
+      <div class="tp-title-block">
+        <div class="tp-label">Tahap 2 · Semester Ganjil</div>
+        <div class="tp-title">Contoh Himpunan Data Terstruktur dalam Kehidupan Sehari-hari</div>
+        <div class="tp-sub">Menjelaskan contoh himpunan data terstruktur berdasarkan pemahaman yang telah dimiliki</div>
+      </div>
+      <div class="tp-jp"><div class="jp-val">4</div><div class="jp-label">Jam Pelajaran</div></div>
+    </div>
+
+    <div class="tp-body">
+
+      <div class="section-label">Identitas LKPD</div>
+      <div style="margin-bottom:18px;">
+        <span class="chip">📚 Informatika</span>
+        <span class="chip">🗓️ Agustus 2026</span>
+        <span class="chip">⏱️ 4 JP (4 × 40 menit)</span>
+        <span class="chip">🎯 Kognitif C2–C3</span>
+      </div>
+
+      <div class="section-label">Tujuan Pembelajaran</div>
+      <div class="tujuan-box">
+        Peserta didik mampu <strong>menjelaskan contoh himpunan data terstruktur dalam kehidupan sehari-hari</strong> berdasarkan pemahaman konsep yang telah dimiliki dari TP 1.
+      </div>
+
+      <div class="section-label">Ringkasan Materi</div>
+      <div class="materi-grid">
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Perpustakaan:</strong> Katalog buku (Judul, Pengarang, Tahun, ISBN, Rak) adalah contoh data terstruktur.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Kesehatan:</strong> Data pasien (ID, Nama, Tanggal Lahir, Diagnosa, Dokter) merupakan data terstruktur di rumah sakit.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Sekolah:</strong> Daftar nilai peserta didik (NIS, Nama, Mapel, Nilai UTS, Nilai UAS) adalah data terstruktur akademik.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>E-commerce:</strong> Database produk (ID Produk, Nama, Harga, Stok, Kategori) merupakan data terstruktur bisnis.</div></div>
+      </div>
+
+      <div class="section-label">Langkah Kegiatan</div>
+      <div class="kegiatan-list">
+        <div class="kegiatan-step"><div class="step-num">1</div><div><strong>Pengamatan Kontekstual:</strong> Identifikasi minimal 5 situasi di lingkungan sekolah atau rumahmu yang menggunakan data terstruktur.</div></div>
+        <div class="kegiatan-step"><div class="step-num">2</div><div><strong>Analisis Struktur:</strong> Untuk setiap situasi yang ditemukan, tuliskan: nama konteks, daftar atribut/kolom yang digunakan, dan contoh 2 record datanya.</div></div>
+        <div class="kegiatan-step"><div class="step-num">3</div><div><strong>Pembuatan Tabel:</strong> Pilih 1 konteks terbaik, buat tabel lengkapnya di lembar kerja digital dengan minimal 5 baris data nyata.</div></div>
+        <div class="kegiatan-step"><div class="step-num">4</div><div><strong>Presentasi Kelompok:</strong> Presentasikan hasilnya dalam 3 menit. Jelaskan mengapa data tersebut dikatakan terstruktur.</div></div>
+      </div>
+
+      <div class="section-label">Soal & Tugas</div>
+      <div class="soal-block">
+        <div class="soal-head"><span class="icon">📝</span>Soal Pemahaman & Penerapan</div>
+        <div class="soal-item">
+          <strong>1.</strong> Sebutkan dan jelaskan <em>tiga contoh</em> himpunan data terstruktur yang ada di lingkungan sekolahmu! Untuk masing-masing contoh, tuliskan minimal 4 atributnya.
+          <div class="jawab-area">Contoh 1: ______ | Atribut: ______________________<br>Contoh 2: ______ | Atribut: ______________________<br>Contoh 3: ______ | Atribut: ______________________</div>
+        </div>
+        <div class="soal-item">
+          <strong>2.</strong> Perhatikan data berikut: "Amir, 15 tahun, kelas X, suka sepakbola." Apakah ini data terstruktur? Ubah data tersebut menjadi format data terstruktur yang benar!
+          <div class="jawab-area">Jawaban: _______________________________________________</div>
+        </div>
+        <div class="soal-item">
+          <strong>3. (Analisis)</strong> Mengapa aplikasi seperti Google Contacts dan WhatsApp menyimpan data kontak dalam format terstruktur? Apa keuntungannya dibanding format tidak terstruktur?
+          <div class="jawab-area">Jawaban: _______________________________________________</div>
+        </div>
+        <div class="soal-item">
+          <strong>4. (Proyek Mini)</strong> Buatlah rancangan database sederhana untuk "Perpustakaan Kelas". Tentukan: nama tabel, daftar kolom beserta tipe datanya (teks, angka, tanggal), dan contoh 3 baris data nyata!
+          <div class="jawab-area">Rancangan tabel: ______________________________________</div>
+        </div>
+      </div>
+
+      <div class="section-label">Rubrik Penilaian</div>
+      <table class="penilaian-table">
+        <tr><th>Aspek</th><th>Indikator</th><th>Skor</th></tr>
+        <tr><td>Identifikasi Contoh</td><td>Mampu menyebutkan ≥3 contoh yang relevan dan tepat</td><td>0–25</td></tr>
+        <tr><td>Penjelasan Atribut</td><td>Atribut yang disebutkan lengkap dan sesuai konteks</td><td>0–25</td></tr>
+        <tr><td>Analisis Kritis</td><td>Mampu membandingkan data terstruktur vs tidak terstruktur</td><td>0–25</td></tr>
+        <tr><td>Proyek Mini</td><td>Rancangan database logis, lengkap, dan dapat diimplementasikan</td><td>0–25</td></tr>
+      </table>
+
+      <div class="section-label">Refleksi Diri</div>
+      <div class="refleksi-grid">
+        <div class="refleksi-item"><div class="emoji">😕</div><p>Masih kesulitan menemukan contoh di sekitar saya</p></div>
+        <div class="refleksi-item"><div class="emoji">🙂</div><p>Dapat menemukan contoh dengan sedikit panduan</p></div>
+        <div class="refleksi-item"><div class="emoji">😄</div><p>Mudah menemukan contoh di mana saja</p></div>
+      </div>
+      <div class="jawab-area" style="min-height:60px;">Pengalaman belajar hari ini yang paling berkesan: _______________</div>
+
+    </div>
+  </div><!-- end TP2 -->
+
+
+  <!-- ───────────────── TP 3 ───────────────── -->
+  <div class="tp-card">
+    <div class="tp-head">
+      <div class="tp-num">TP 3</div>
+      <div class="tp-title-block">
+        <div class="tp-label">Tahap 3 · Semester Ganjil</div>
+        <div class="tp-title">Instruksi Logis dalam Format Pseudocode</div>
+        <div class="tp-sub">Menuliskan sekumpulan instruksi logis menggunakan kosa kata terbatas atas simbol dalam format pseudocode</div>
+      </div>
+      <div class="tp-jp"><div class="jp-val">6</div><div class="jp-label">Jam Pelajaran</div></div>
+    </div>
+
+    <div class="tp-body">
+
+      <div class="section-label">Identitas LKPD</div>
+      <div style="margin-bottom:18px;">
+        <span class="chip">📚 Informatika</span>
+        <span class="chip">🗓️ Agustus – September 2026</span>
+        <span class="chip">⏱️ 6 JP (6 × 40 menit)</span>
+        <span class="chip">🎯 Kognitif C3–C4</span>
+      </div>
+
+      <div class="section-label">Tujuan Pembelajaran</div>
+      <div class="tujuan-box">
+        Peserta didik mampu <strong>menuliskan sekumpulan instruksi logis</strong> menggunakan kosa kata terbatas dan simbol dalam format pseudocode untuk menyelesaikan permasalahan sederhana.
+      </div>
+
+      <div class="section-label">Ringkasan Materi</div>
+      <div class="materi-grid">
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Pseudocode</strong> adalah representasi algoritma menggunakan bahasa manusia yang terstruktur, sebagai jembatan antara logika dan kode program.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Kata kunci utama:</strong> MULAI/AKHIR, INPUT, OUTPUT/CETAK, JIKA...MAKA...SELESAI, SELAMA...LAKUKAN, ULANGI...SAMPAI.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Variabel</strong> adalah wadah untuk menyimpan nilai: nama_siswa ← "Budi", nilai ← 85.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Struktur kontrol:</strong> Percabangan (IF-ELSE) dan pengulangan (FOR, WHILE) adalah inti dari instruksi logis.</div></div>
+      </div>
+
+      <!-- Contoh pseudocode -->
+      <div class="section-label">Contoh Pseudocode</div>
+      <p style="font-size:.83rem;color:var(--text-muted);margin-bottom:10px;">Contoh: Menentukan kelulusan peserta didik berdasarkan nilai rata-rata</p>
+      <div class="pseudo-box">
+<span class="kw">MULAI</span>
+  <span class="cm">// Masukkan data peserta didik</span>
+  <span class="kw">INPUT</span> nama_siswa
+  <span class="kw">INPUT</span> nilai_uts
+  <span class="kw">INPUT</span> nilai_uas
+
+  <span class="cm">// Hitung rata-rata</span>
+  rata_rata ← (nilai_uts + nilai_uas) / <span class="val">2</span>
+
+  <span class="cm">// Tentukan kelulusan</span>
+  <span class="kw">JIKA</span> rata_rata >= <span class="val">75</span> <span class="kw">MAKA</span>
+    <span class="kw">CETAK</span> nama_siswa + <span class="val">" LULUS"</span>
+  <span class="kw">JIKA TIDAK</span>
+    <span class="kw">CETAK</span> nama_siswa + <span class="val">" TIDAK LULUS"</span>
+  <span class="kw">SELESAI JIKA</span>
+<span class="kw">AKHIR</span>
+      </div>
+
+      <div class="section-label">Langkah Kegiatan</div>
+      <div class="kegiatan-list">
+        <div class="kegiatan-step"><div class="step-num">1</div><div><strong>Analisis Contoh:</strong> Telaah pseudocode di atas. Identifikasi setiap baris: mana yang INPUT, OUTPUT, kondisi, dan kalkulasi.</div></div>
+        <div class="kegiatan-step"><div class="step-num">2</div><div><strong>Trace Table:</strong> Jalankan pseudocode secara manual dengan data: Nama=Dina, UTS=70, UAS=80. Catat nilai variabel di setiap langkah.</div></div>
+        <div class="kegiatan-step"><div class="step-num">3</div><div><strong>Modifikasi:</strong> Ubah pseudocode agar juga menampilkan predikat nilai: A (≥90), B (80–89), C (70–79), D (di bawah 70).</div></div>
+        <div class="kegiatan-step"><div class="step-num">4</div><div><strong>Buat Mandiri:</strong> Tulis pseudocode sendiri untuk kasus yang diberikan pada soal. Pastikan logika benar sebelum menuliskan.</div></div>
+        <div class="kegiatan-step"><div class="step-num">5</div><div><strong>Review Berpasangan:</strong> Tukarkan pseudocode dengan teman sebangku. Lacak alur logikanya dan berikan komentar konstruktif.</div></div>
+      </div>
+
+      <div class="section-label">Soal & Tugas</div>
+      <div class="soal-block">
+        <div class="soal-head"><span class="icon">💻</span>Latihan Penulisan Pseudocode</div>
+        <div class="soal-item">
+          <strong>1.</strong> Tuliskan pseudocode untuk <em>menghitung luas dan keliling persegi panjang</em>! Input: panjang dan lebar. Output: luas dan keliling beserta satuannya.
+          <div class="pseudo-box" style="margin-top:10px;min-height:120px;color:rgba(165,243,252,.4);font-style:italic;">MULAI<br>  // Tuliskan pseudocode-mu di sini<br>  ...<br>AKHIR</div>
+        </div>
+        <div class="soal-item">
+          <strong>2.</strong> Tuliskan pseudocode untuk <em>menentukan bilangan ganjil atau genap</em>! Input: sebuah bilangan bulat. Output: "GANJIL" atau "GENAP". (Petunjuk: gunakan operator modulo %)
+          <div class="pseudo-box" style="margin-top:10px;min-height:120px;color:rgba(165,243,252,.4);font-style:italic;">MULAI<br>  // Tuliskan pseudocode-mu di sini<br>  ...<br>AKHIR</div>
+        </div>
+        <div class="soal-item">
+          <strong>3. (Tantangan)</strong> Tuliskan pseudocode menggunakan struktur pengulangan untuk <em>mencetak tabel perkalian</em> dari 1 sampai 10 untuk angka yang diinput pengguna!
+          <div class="pseudo-box" style="margin-top:10px;min-height:140px;color:rgba(165,243,252,.4);font-style:italic;">MULAI<br>  // Tuliskan pseudocode-mu di sini<br>  ...<br>AKHIR</div>
+        </div>
+        <div class="soal-item">
+          <strong>4. (Analisis)</strong> Pseudocode di bawah ini memiliki kesalahan logika. Temukan dan perbaiki!<br>
+          <div class="pseudo-box" style="margin-top:8px;">
+<span class="cm">// Mencari nilai terbesar dari 3 angka (ada bug!)</span>
+<span class="kw">INPUT</span> a, b, c
+<span class="kw">JIKA</span> a > b <span class="kw">MAKA</span>
+  terbesar ← a
+<span class="kw">JIKA TIDAK</span>
+  terbesar ← b
+<span class="kw">SELESAI JIKA</span>
+<span class="cm">// Bug: variabel c tidak pernah dibandingkan!</span>
+<span class="kw">CETAK</span> <span class="val">"Terbesar: "</span> + terbesar
+          </div>
+          <div class="jawab-area" style="margin-top:10px;">Perbaikan pseudocode: _________________________________</div>
+        </div>
+      </div>
+
+      <div class="section-label">Rubrik Penilaian</div>
+      <table class="penilaian-table">
+        <tr><th>Aspek</th><th>Indikator</th><th>Skor</th></tr>
+        <tr><td>Kebenaran Sintaks</td><td>Menggunakan kata kunci pseudocode dengan benar dan konsisten</td><td>0–20</td></tr>
+        <tr><td>Logika Algoritma</td><td>Alur logika benar dan menghasilkan output yang tepat</td><td>0–30</td></tr>
+        <tr><td>Kelengkapan</td><td>Mencakup semua kasus (termasuk edge case)</td><td>0–25</td></tr>
+        <tr><td>Identifikasi Bug</td><td>Mampu menemukan dan memperbaiki kesalahan logika</td><td>0–25</td></tr>
+      </table>
+
+      <div class="section-label">Refleksi Diri</div>
+      <div class="refleksi-grid">
+        <div class="refleksi-item"><div class="emoji">😕</div><p>Pseudocode masih sulit, butuh contoh lebih banyak</p></div>
+        <div class="refleksi-item"><div class="emoji">🙂</div><p>Dapat menulis pseudocode sederhana dengan usaha</p></div>
+        <div class="refleksi-item"><div class="emoji">😄</div><p>Pseudocode terasa natural dan logis bagi saya</p></div>
+      </div>
+      <div class="jawab-area" style="min-height:60px;">Hal yang paling menantang dari belajar pseudocode: ______________</div>
+
+    </div>
+  </div><!-- end TP3 -->
+
+</div><!-- end container ganjil -->
+</div><!-- end page-ganjil -->
+
+
+<!-- ══════════════════════════════════
+     SEMESTER GENAP
+══════════════════════════════════ -->
+<div id="page-genap" class="page">
+
+<!-- HERO -->
+<div class="hero" style="background: linear-gradient(135deg, #064e3b 0%, #065f46 60%, #047857 100%);">
+  <div class="hero-inner">
+    <div class="hero-tag" style="background:rgba(0,198,167,.15);border-color:rgba(0,198,167,.4);">📗 Semester Genap</div>
+    <h1>E-LKPD Informatika<br><span>Semester Genap</span></h1>
+    <p>Materi berfokus pada penerapan berpikir komputasional dalam menyelesaikan masalah data terstruktur dan penggunaannya di berbagai bidang kehidupan.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="label">Total JP</div><div class="value">12 JP Efektif</div></div>
+      <div class="hero-meta-item"><div class="label">Periode</div><div class="value">Januari – Juni 2027</div></div>
+      <div class="hero-meta-item"><div class="label">Tujuan Pembelajaran</div><div class="value">TP 4 · TP 5</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="sem-header">
+    <span class="sem-badge genap">Genap 2026/2027</span>
+    <div class="sem-line"></div>
+    <span style="font-size:.8rem;color:var(--text-muted);">2 Tujuan Pembelajaran · 12 JP</span>
+  </div>
+
+  <!-- ───────────────── TP 4 ───────────────── -->
+  <div class="tp-card">
+    <div class="tp-head genap">
+      <div class="tp-num">TP 4</div>
+      <div class="tp-title-block">
+        <div class="tp-label">Tahap 4 · Semester Genap</div>
+        <div class="tp-title">Berpikir Komputasional untuk Persoalan Data Terstruktur</div>
+        <div class="tp-sub">Menerapkan berpikir komputasional dalam menyelesaikan persoalan data terstruktur sederhana dengan volume kecil</div>
+      </div>
+      <div class="tp-jp"><div class="jp-val">8</div><div class="jp-label">Jam Pelajaran</div></div>
+    </div>
+
+    <div class="tp-body">
+
+      <div class="section-label">Identitas LKPD</div>
+      <div style="margin-bottom:18px;">
+        <span class="chip">📚 Informatika</span>
+        <span class="chip">🗓️ Januari 2027</span>
+        <span class="chip">⏱️ 8 JP (8 × 40 menit)</span>
+        <span class="chip">🎯 Kognitif C3–C5</span>
+      </div>
+
+      <div class="section-label">Tujuan Pembelajaran</div>
+      <div class="tujuan-box">
+        Peserta didik mampu <strong>menerapkan berpikir komputasional</strong> — meliputi dekomposisi, pengenalan pola, abstraksi, dan perancangan algoritma — dalam menyelesaikan persoalan <strong>data terstruktur sederhana dengan volume kecil</strong>.
+      </div>
+
+      <div class="section-label">Ringkasan Materi: 4 Pilar Berpikir Komputasional</div>
+      <div class="materi-grid">
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>🔍 Dekomposisi:</strong> Memecah masalah besar menjadi bagian-bagian kecil yang lebih mudah diselesaikan. Contoh: masalah "mengurutkan data" dipecah menjadi "membandingkan", "menukar", "mengulang".</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>🔄 Pengenalan Pola:</strong> Menemukan persamaan atau pola yang berulang dalam data. Contoh: semua data nilai ≥ 75 memiliki pola yang sama yaitu "lulus".</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>🎯 Abstraksi:</strong> Mengidentifikasi informasi penting dan mengabaikan detail yang tidak relevan. Contoh: untuk mengurutkan nama, kita hanya butuh kolom nama, bukan semua kolom.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>📋 Perancangan Algoritma:</strong> Membuat langkah-langkah logis dan berurutan yang jelas untuk menyelesaikan masalah secara sistematis.</div></div>
+      </div>
+
+      <!-- Contoh aplikasi -->
+      <div class="section-label">Penerapan: Algoritma Pengurutan Data (Bubble Sort Sederhana)</div>
+      <div class="pseudo-box" style="background: #064e3b;">
+<span class="cm">// Bubble Sort: Mengurutkan array dari kecil ke besar</span>
+<span class="kw">MULAI</span>
+  <span class="kw">INPUT</span> data[] = [<span class="val">85, 72, 90, 68, 77</span>]  <span class="cm">// data nilai siswa</span>
+  n ← panjang(data)
+
+  <span class="kw">UNTUK</span> i ← <span class="val">0</span> <span class="kw">SAMPAI</span> n-<span class="val">1</span> <span class="kw">LAKUKAN</span>
+    <span class="kw">UNTUK</span> j ← <span class="val">0</span> <span class="kw">SAMPAI</span> n-i-<span class="val">2</span> <span class="kw">LAKUKAN</span>
+      <span class="kw">JIKA</span> data[j] > data[j+<span class="val">1</span>] <span class="kw">MAKA</span>
+        temp ← data[j]
+        data[j] ← data[j+<span class="val">1</span>]
+        data[j+<span class="val">1</span>] ← temp
+      <span class="kw">SELESAI JIKA</span>
+    <span class="kw">SELESAI UNTUK</span>
+  <span class="kw">SELESAI UNTUK</span>
+
+  <span class="kw">CETAK</span> <span class="val">"Data terurut: "</span> + data
+<span class="kw">AKHIR</span>
+      </div>
+
+      <div class="section-label">Langkah Kegiatan</div>
+      <div class="kegiatan-list">
+        <div class="kegiatan-step genap"><div class="step-num">1</div><div><strong>Dekomposisi Masalah:</strong> Diberikan masalah "Temukan siswa dengan nilai tertinggi dari daftar 10 siswa." Uraikan masalah ini menjadi sub-masalah yang lebih kecil.</div></div>
+        <div class="kegiatan-step genap"><div class="step-num">2</div><div><strong>Pengenalan Pola:</strong> Dari data nilai 10 siswa yang diberikan guru, identifikasi pola: siapa yang selalu di atas rata-rata? Apakah ada pola nilai berdasarkan urutan absen?</div></div>
+        <div class="kegiatan-step genap"><div class="step-num">3</div><div><strong>Abstraksi:</strong> Dari tabel data lengkap siswa (nama, alamat, nilai, hobi, dll.), tentukan hanya kolom mana yang relevan untuk mencari siswa berprestasi.</div></div>
+        <div class="kegiatan-step genap"><div class="step-num">4</div><div><strong>Rancang Algoritma:</strong> Tuliskan pseudocode lengkap untuk mencari nilai tertinggi dan nama siswa yang mendapatkan nilai tersebut.</div></div>
+        <div class="kegiatan-step genap"><div class="step-num">5</div><div><strong>Implementasi Manual:</strong> Jalankan algoritmamu secara manual (trace table) menggunakan data yang diberikan. Verifikasi hasilnya.</div></div>
+        <div class="kegiatan-step genap"><div class="step-num">6</div><div><strong>Evaluasi:</strong> Apakah algoritmamu efisien? Berapa kali perbandingan dilakukan? Diskusikan cara memperbaikinya.</div></div>
+      </div>
+
+      <div class="section-label">Soal & Tugas</div>
+      <div class="soal-block">
+        <div class="soal-head"><span class="icon">🧮</span>Penerapan Berpikir Komputasional</div>
+        <div class="soal-item">
+          <strong>1. (Dekomposisi)</strong> Masalah: "Buat sistem absensi digital sederhana." Uraikan masalah ini menjadi minimal 5 sub-masalah yang lebih kecil menggunakan pendekatan dekomposisi!
+          <div class="jawab-area">Sub-masalah 1: _______<br>Sub-masalah 2: _______<br>Sub-masalah 3: _______<br>Sub-masalah 4: _______<br>Sub-masalah 5: _______</div>
+        </div>
+        <div class="soal-item">
+          <strong>2. (Pengenalan Pola)</strong> Diberikan data nilai ulangan 8 siswa: 75, 82, 75, 90, 68, 82, 91, 75. Identifikasi pola apa yang kamu temukan dan apa artinya bagi guru!
+          <div class="jawab-area">Pola yang ditemukan: ____________________________________</div>
+        </div>
+        <div class="soal-item">
+          <strong>3. (Abstraksi + Algoritma)</strong> Tuliskan pseudocode untuk <em>menghitung rata-rata nilai kelas</em> dari array data nilai. Terapkan abstraksi: informasi apa saja yang dibutuhkan, dan mana yang tidak perlu?
+          <div class="pseudo-box" style="margin-top:10px;min-height:150px;color:rgba(165,243,252,.4);font-style:italic;">MULAI<br>  // Tuliskan pseudocode-mu di sini<br>  ...<br>AKHIR</div>
+        </div>
+        <div class="soal-item">
+          <strong>4. (Proyek)</strong> Diberikan data 5 siswa dengan 3 nilai mapel masing-masing. Buat algoritma lengkap (pseudocode + trace table) untuk: menghitung nilai rata-rata tiap siswa, menentukan siapa yang lulus (rata-rata ≥ 70), dan mengurutkan berdasarkan rata-rata tertinggi!
+          <div class="jawab-area" style="min-height:120px;">Pseudocode + Trace Table: _______________________________</div>
+        </div>
+      </div>
+
+      <div class="section-label">Data Kerja untuk Soal No. 4</div>
+      <table class="penilaian-table">
+        <tr><th>Nama Siswa</th><th>Nilai MTK</th><th>Nilai IPA</th><th>Nilai B. Indo</th><th>Rata-rata</th><th>Status</th></tr>
+        <tr><td>Andi</td><td>78</td><td>85</td><td>72</td><td>___</td><td>___</td></tr>
+        <tr><td>Bella</td><td>65</td><td>70</td><td>68</td><td>___</td><td>___</td></tr>
+        <tr><td>Citra</td><td>90</td><td>88</td><td>92</td><td>___</td><td>___</td></tr>
+        <tr><td>Deni</td><td>55</td><td>62</td><td>58</td><td>___</td><td>___</td></tr>
+        <tr><td>Eka</td><td>82</td><td>79</td><td>84</td><td>___</td><td>___</td></tr>
+      </table>
+
+      <div class="section-label">Rubrik Penilaian</div>
+      <table class="penilaian-table">
+        <tr><th>Aspek</th><th>Indikator</th><th>Skor</th></tr>
+        <tr><td>Dekomposisi</td><td>Sub-masalah relevan, lengkap, dan tidak tumpang tindih</td><td>0–20</td></tr>
+        <tr><td>Pengenalan Pola</td><td>Pola yang ditemukan bermakna dan dianalisis dengan benar</td><td>0–20</td></tr>
+        <tr><td>Abstraksi</td><td>Mampu memilih informasi yang relevan dan mengabaikan yang tidak perlu</td><td>0–20</td></tr>
+        <tr><td>Algoritma</td><td>Pseudocode logis, lengkap, dan menghasilkan output benar</td><td>0–25</td></tr>
+        <tr><td>Trace Table</td><td>Pelacakan manual akurat sesuai pseudocode</td><td>0–15</td></tr>
+      </table>
+
+      <div class="section-label">Refleksi Diri</div>
+      <div class="refleksi-grid">
+        <div class="refleksi-item"><div class="emoji">😕</div><p>Berpikir komputasional masih terasa abstrak bagi saya</p></div>
+        <div class="refleksi-item"><div class="emoji">🙂</div><p>Bisa menerapkan 1-2 pilar, butuh latihan lebih banyak</p></div>
+        <div class="refleksi-item"><div class="emoji">😄</div><p>Dapat menerapkan semua 4 pilar secara terintegrasi</p></div>
+      </div>
+      <div class="jawab-area" style="min-height:60px;">Pilar berpikir komputasional yang paling mudah/sulit bagi saya: ___</div>
+
+    </div>
+  </div><!-- end TP4 -->
+
+
+  <!-- ───────────────── TP 5 ───────────────── -->
+  <div class="tp-card">
+    <div class="tp-head genap">
+      <div class="tp-num">TP 5</div>
+      <div class="tp-title-block">
+        <div class="tp-label">Tahap 5 · Semester Genap</div>
+        <div class="tp-title">Kegunaan Berpikir Komputasional di Berbagai Bidang Kehidupan</div>
+        <div class="tp-sub">Mendisposisikan kegunaan berpikir komputasional yang diperlukan pada berbagai bidang kehidupan</div>
+      </div>
+      <div class="tp-jp"><div class="jp-val">4</div><div class="jp-label">Jam Pelajaran</div></div>
+    </div>
+
+    <div class="tp-body">
+
+      <div class="section-label">Identitas LKPD</div>
+      <div style="margin-bottom:18px;">
+        <span class="chip">📚 Informatika</span>
+        <span class="chip">🗓️ Februari 2027</span>
+        <span class="chip">⏱️ 4 JP (4 × 40 menit)</span>
+        <span class="chip">🎯 Kognitif C4–C6</span>
+      </div>
+
+      <div class="section-label">Tujuan Pembelajaran</div>
+      <div class="tujuan-box">
+        Peserta didik mampu <strong>mendisposisikan (menginternalisasi dan mengaplikasikan) kegunaan berpikir komputasional</strong> yang diperlukan pada berbagai bidang kehidupan: kesehatan, pertanian, pendidikan, bisnis, lingkungan, dan seni.
+      </div>
+
+      <div class="section-label">Ringkasan Materi: BK di Berbagai Bidang</div>
+      <div class="materi-grid">
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>🏥 Kesehatan:</strong> Dokter menggunakan algoritma diagnosis untuk menentukan penyakit berdasarkan gejala. AI analisis citra medis menggunakan abstraksi dan pengenalan pola.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>🌾 Pertanian:</strong> Petani cerdas menggunakan sensor dan algoritma untuk menentukan waktu tanam, irigasi otomatis, dan prediksi panen berdasarkan data cuaca.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>📦 Bisnis & Logistik:</strong> E-commerce menggunakan algoritma rekomendasi produk (pengenalan pola) dan optimasi rute pengiriman (perancangan algoritma).</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>🎓 Pendidikan:</strong> Platform belajar adaptif seperti Duolingo menggunakan algoritma untuk menyesuaikan materi berdasarkan performa belajar setiap siswa.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>🌍 Lingkungan:</strong> Ilmuwan menggunakan dekomposisi dan abstraksi untuk memodelkan perubahan iklim dan memprediksi dampak lingkungan.</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>🎨 Seni & Budaya:</strong> Musik digital, efek film, dan game menggunakan algoritma rendering, animasi, dan generasi prosedural yang merupakan penerapan BK.</div></div>
+      </div>
+
+      <div class="section-label">Langkah Kegiatan</div>
+      <div class="kegiatan-list">
+        <div class="kegiatan-step genap"><div class="step-num">1</div><div><strong>Eksplorasi Bidang:</strong> Setiap kelompok memilih 1 bidang kehidupan. Lakukan riset singkat (15 menit) tentang bagaimana berpikir komputasional digunakan di bidang tersebut.</div></div>
+        <div class="kegiatan-step genap"><div class="step-num">2</div><div><strong>Identifikasi 4 Pilar:</strong> Dalam konteks bidang yang dipilih, identifikasi: di mana dekomposisi diterapkan? pengenalan pola seperti apa? abstraksi apa yang dilakukan? algoritma apa yang digunakan?</div></div>
+        <div class="kegiatan-step genap"><div class="step-num">3</div><div><strong>Studi Kasus Nyata:</strong> Cari 1 contoh nyata/berita/teknologi di bidang tersebut yang secara eksplisit menggunakan BK. Analisis bagaimana BK diterapkan.</div></div>
+        <div class="kegiatan-step genap"><div class="step-num">4</div><div><strong>Presentasi Poster Digital:</strong> Buat poster digital (Canva/PPT) yang menjelaskan penerapan BK di bidang yang dipilih. Presentasikan kepada kelas.</div></div>
+      </div>
+
+      <div class="section-label">Soal & Tugas</div>
+      <div class="soal-block">
+        <div class="soal-head"><span class="icon">🌐</span>Eksplorasi Lintas Bidang</div>
+        <div class="soal-item">
+          <strong>1.</strong> Pilih salah satu bidang di bawah ini dan jelaskan bagaimana <em>keempat pilar berpikir komputasional</em> diterapkan di sana (minimal 2 kalimat per pilar):<br>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+            <span class="chip">🏥 Kesehatan</span><span class="chip">🌾 Pertanian</span><span class="chip">📦 Bisnis</span><span class="chip">🎓 Pendidikan</span><span class="chip">🌍 Lingkungan</span><span class="chip">🎨 Seni</span>
+          </div>
+          <div class="jawab-area" style="margin-top:10px;min-height:120px;">Bidang dipilih: ___<br>Dekomposisi: ___<br>Pengenalan Pola: ___<br>Abstraksi: ___<br>Algoritma: ___</div>
+        </div>
+        <div class="soal-item">
+          <strong>2.</strong> Di era Revolusi Industri 4.0, kecerdasan buatan (AI) semakin banyak digunakan. Menurutmu, apakah semua profesi di masa depan memerlukan kemampuan berpikir komputasional? Berikan argumentasimu dengan 3 alasan yang kuat!
+          <div class="jawab-area">Jawaban: _______________________________________________</div>
+        </div>
+        <div class="soal-item">
+          <strong>3. (Kreasi)</strong> Bayangkan kamu adalah seorang inovator muda. Rancang sebuah solusi sederhana berbasis berpikir komputasional untuk <em>satu masalah nyata di lingkungan sekolahmu</em>! Jelaskan: masalahnya apa, solusinya bagaimana, dan 4 pilar BK apa yang digunakan.
+          <div class="jawab-area" style="min-height:100px;">Masalah: ___<br>Solusi: ___<br>Penerapan 4 Pilar BK: ___</div>
+        </div>
+        <div class="soal-item">
+          <strong>4. (Evaluasi)</strong> Bandingkan penerapan berpikir komputasional di <em>dua bidang yang berbeda</em>. Apa persamaan dan perbedaannya? Bidang mana yang menurutmu paling krusial membutuhkan BK dan mengapa?
+          <div class="jawab-area" style="min-height:100px;">Bidang 1: ___ | Bidang 2: ___<br>Persamaan: ___<br>Perbedaan: ___<br>Bidang paling krusial: ___</div>
+        </div>
+      </div>
+
+      <!-- Tabel Pemetaan BK -->
+      <div class="section-label">Tabel Pemetaan Berpikir Komputasional (Isi Bersama)</div>
+      <table class="penilaian-table">
+        <tr><th>Bidang</th><th>Dekomposisi</th><th>Pengenalan Pola</th><th>Abstraksi</th><th>Algoritma</th></tr>
+        <tr><td>Kesehatan</td><td>Diagnosis gejala per sistem tubuh</td><td>Pola gejala penyakit</td><td>Data medis relevan</td><td>Protokol pengobatan</td></tr>
+        <tr><td>Pertanian</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td></tr>
+        <tr><td>Bisnis</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td></tr>
+        <tr><td>Pendidikan</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td><td style="color:var(--text-muted);font-style:italic;">Isi di sini...</td></tr>
+      </table>
+
+      <div class="section-label">Rubrik Penilaian</div>
+      <table class="penilaian-table">
+        <tr><th>Aspek</th><th>Indikator</th><th>Skor</th></tr>
+        <tr><td>Kedalaman Analisis</td><td>Penerapan 4 pilar BK di bidang pilihan dijelaskan secara mendalam</td><td>0–30</td></tr>
+        <tr><td>Kemampuan Argumentasi</td><td>Argumen logis, didukung contoh nyata dan relevan</td><td>0–25</td></tr>
+        <tr><td>Kreativitas Solusi</td><td>Solusi yang dirancang inovatif, realistis, dan menerapkan BK</td><td>0–25</td></tr>
+        <tr><td>Kemampuan Evaluatif</td><td>Perbandingan dua bidang dilakukan secara kritis dan berimbang</td><td>0–20</td></tr>
+      </table>
+
+      <div class="section-label">Refleksi Akhir Tahun Pembelajaran</div>
+      <div class="materi-grid" style="margin-bottom:16px;">
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Dari TP 1–5</strong>, konsep mana yang paling berkesan dan mengapa?</div></div>
+        <div class="materi-item"><div class="materi-dot"></div><div><strong>Hubungan antar TP:</strong> Bagaimana konsep data terstruktur (TP1–2), pseudocode (TP3), dan BK (TP4–5) saling berkaitan?</div></div>
+      </div>
+      <div class="refleksi-grid">
+        <div class="refleksi-item"><div class="emoji">📖</div><p>Saya masih ingin mendalami lebih banyak materi ini</p></div>
+        <div class="refleksi-item"><div class="emoji">💡</div><p>Saya sudah memahami dan dapat menjelaskan ke orang lain</p></div>
+        <div class="refleksi-item"><div class="emoji">🚀</div><p>Saya siap menerapkannya dalam kehidupan nyata!</p></div>
+      </div>
+      <div class="jawab-area" style="min-height:80px;">Refleksi perjalanan belajar satu tahun (TP1–TP5): ________________<br>Rencana saya untuk menggunakan ilmu ini ke depan: ______________</div>
+
+    </div>
+  </div><!-- end TP5 -->
+
+</div><!-- end container genap -->
+</div><!-- end page-genap -->
+
+<script>
+  function showPage(id) {
+    // hide all
+    document.querySelectorAll('.page, .cover-page').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+
+    // show target
+    if (id === 'cover') {
+      document.getElementById('page-cover').classList.add('active');
+      document.querySelectorAll('.nav-tab')[0].classList.add('active');
+    } else if (id === 'ganjil') {
+      document.getElementById('page-ganjil').classList.add('active');
+      document.querySelectorAll('.nav-tab')[1].classList.add('active');
+    } else if (id === 'genap') {
+      document.getElementById('page-genap').classList.add('active');
+      document.querySelectorAll('.nav-tab')[2].classList.add('active');
+    }
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+</script>
+
+</body>
+</html>
