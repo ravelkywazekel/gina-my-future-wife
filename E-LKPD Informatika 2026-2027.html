@@ -124,7 +124,7 @@
   .tp-head {
     background: linear-gradient(90deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
     padding: 18px 24px;
-    display: flex; align-items: flex-start; gap: 16px;
+    display: flex; align-items: flex-start; gap: 16px; flex-wrap: wrap;
   }
   .tp-head.genap {
     background: linear-gradient(90deg, #064e3b 0%, #047857 100%);
@@ -249,6 +249,7 @@
     border-radius: 10px; padding: 16px 20px;
     font-family: var(--mono); font-size: .82rem;
     color: #a5f3fc; line-height: 1.8; margin-bottom: 10px;
+    overflow-x: auto;
   }
   .pseudo-box .kw { color: #f472b6; }
   .pseudo-box .cm { color: #6b7280; }
@@ -312,7 +313,14 @@
     .materi-grid { grid-template-columns: 1fr; }
     .refleksi-grid { grid-template-columns: 1fr; }
     .cover-info-grid { grid-template-columns: 1fr; }
-    .tp-jp { display: none; }
+    
+    .tp-head {
+      flex-direction: column; 
+    }
+    .tp-jp {
+      margin-left: 0; 
+      margin-top: 10px;
+    }
   }
 
   /* print */
